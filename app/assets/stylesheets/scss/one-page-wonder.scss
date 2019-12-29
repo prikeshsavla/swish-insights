@@ -3,12 +3,13 @@
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
 @import 'variables.scss';
-@import 'mixins.scss';
+@import 'components/mixins';
 /* finally, import Bootstrap to set the changes! */
 @import 'bootstrap/scss/bootstrap';
 // Global CSS
 @import 'global.scss';
 // Components
-@import 'navbar.scss';
-@import 'masthead.scss';
+
+@import "components/_init.scss";
+
 @import 'bootstrap-overrides.scss';
