@@ -1,0 +1,14 @@
+// Core variables and mixins
+/* import the necessary Bootstrap files */
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'variables.scss';
+@import 'mixins.scss';
+/* finally, import Bootstrap to set the changes! */
+@import 'bootstrap/scss/bootstrap';
+// Global CSS
+@import 'global.scss';
+// Components
+@import 'navbar.scss';
+@import 'masthead.scss';
+@import 'bootstrap-overrides.scss';
