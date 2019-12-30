@@ -7,35 +7,8 @@ class Users::BaseController < ApplicationController
   before_action :authenticate_user!
   # before_action :set_paper_trail_whodunnit
 
-  private
-  def info_for_paper_trail
-    {whodunnit_type: current_user.class.name, whodunnit: current_user.id} if current_user.present?
-  end
-
-  def user_not_authorized
-    message = 'You are not authorized to perform this action.'
-    set_flash_message(message, :warning, now: false)
-    redirect_to(request.referrer || user_root_path)
-  end
-
-  def render_pdf_for(record, params, locals = {})
-    render(
-        show_as_html: params[:debug].present?,
-        pdf: record.filename,
-        template: ['shared', 'layouts', 'pdf_templates', record.class.name.pluralize.underscore, 'show'].join('/'),
-        layout: 'shared/layouts/pdf_templates/show',
-        page_size: 'A4',
-        footer: {
-            center: '[page] of [topage]'
-        },
-        # show_as_html: true,
-        locals: {
-            record: record
-        }.merge(locals)
-    )
-  end
-
   protected
+
   def policy!(user, record)
     CustomPolicyFinder.new(record, namespace).policy!.new(user, record)
   end
@@ -62,5 +35,35 @@ class Users::BaseController < ApplicationController
 
   def controller_namespace
     @controller_namespace ||= controller_path.split('/').first
+  end
+
+
+  private
+
+  def info_for_paper_trail
+    {whodunnit_type: current_user.class.name, whodunnit: current_user.id} if current_user.present?
+  end
+
+  def user_not_authorized
+    message = 'You are not authorized to perform this action.'
+    set_flash_message(message, :warning, now: false)
+    redirect_to(request.referrer || user_root_path)
+  end
+
+  def render_pdf_for(record, params, locals = {})
+    render(
+        show_as_html: params[:debug].present?,
+        pdf: record.filename,
+        template: ['shared', 'layouts', 'pdf_templates', record.class.name.pluralize.underscore, 'show'].join('/'),
+        layout: 'shared/layouts/pdf_templates/show',
+        page_size: 'A4',
+        footer: {
+            center: '[page] of [topage]'
+        },
+        # show_as_html: true,
+        locals: {
+            record: record
+        }.merge(locals)
+    )
   end
 end

@@ -37,10 +37,10 @@ default: &default
     - .mjs
     - .js
     - .sass
-    - .scss
+    - .frontend
     - .css
     - .module.sass
-    - .module.scss
+    - .module.frontend
     - .module.css
     - .png
     - .svg
