@@ -12,67 +12,77 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <form>
-      <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-10">
-          <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-        </div>
-      </div>
+    <div id="app">
 
-      <div class="form-group row">
-        <div class="col-sm-2">Checkbox</div>
-        <div class="col-sm-10">
-          <div class="form-row">
-            <div class="col">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck1">
-                <label class="form-check-label" for="gridCheck1">
-                  Example checkbox
-                </label>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck2">
-                <label class="form-check-label" for="gridCheck2">
-                  Example checkbox
-                </label>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck3">
-                <label class="form-check-label" for="gridCheck3">
-                  Example checkbox
-                </label>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck4">
-                <label class="form-check-label" for="gridCheck4">
-                  Example checkbox
-                </label>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck5">
-                <label class="form-check-label" for="gridCheck5">
-                  Example checkbox
-                </label>
-              </div>
-            </div>
+      <form action="#" @submit="run">
+        <div class="field has-addons is-horizontal">
+          <label class="label field-label">URL</label>
+          <div class="control field-body">
+            <input class="input" type="text" placeholder="Text input" v-model="url" required/>
           </div>
+          <div class="control">
+            <button type="button" class="button is-info" @click="findLinks">Find Related Links</button>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label"></div>
+          <div class="field-body">
+            <ul>
+              <li v-for="link in relatedLinks" class="is-inline" :key="link.value">
+                <label class="checkbox is-inline">
+                  <input type="checkbox" :value="link.value"/>
+                  {{link.name}}
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <label class="label field-label">Category (Optional)</label>
+          <div class="control field-body">
+            <label class="checkbox">
+              <input type="checkbox" value="accessibility" v-model="categories"/>
+              accessibility
+            </label>
+            &nbsp;
+            <label class="checkbox">
+              <input type="checkbox" value="best-practices" v-model="categories"/>
+              best-practices
+            </label>
+            &nbsp;
+            <label class="checkbox">
+              <input type="checkbox" value="performance" v-model="categories"/>
+              performance
+            </label>
+            &nbsp;
+            <label class="checkbox">
+              <input type="checkbox" value="pwa" v-model="categories"/>
+              pwa
+            </label>
+            &nbsp;
+            <label class="checkbox">
+              <input type="checkbox" v-model="categories" value="seo"/>
+              seo
+            </label>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <label class="label field-label"></label>
+          <div class="control field-body">
+            <button class="button is-primary" type="button" :class="{'is-loading':loadingResults}">
+                <span class="icon is-small">
+                  <i class="fas fa-check"></i>
+                </span>
+              <span>Submit</span>
+            </button>
+          </div>
+        </div>
 
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-sm-10">
-          <button type="submit" class="btn btn-primary">Start</button>
-        </div>
-      </div>
-    </form>
+        <h3>Result</h3>
+        <div class="notification" id="result"></div>
+      </form>
+
+    </div>
+
   </div>
 </div>
