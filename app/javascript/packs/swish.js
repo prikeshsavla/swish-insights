@@ -14,10 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         data: {
 
-            url: "http://www.google.com",
+            url: "http://prikeshsavla.com",
             relatedLinks: [],
             loadingResults: false,
-            categories: ["performance"]
+            categories: ["performance"],
+            result: ""
 
         },
 
@@ -46,14 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         // See https://developers.google.com/speed/docs/insights/v5/reference/pagespeedapi/runpagespeed#response
                         // to learn more about each of the properties in the response object.
                         that.showInitialContent(json.id);
-                        const cruxMetrics = {
-                            "First Contentful Paint":
-                            json.loadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS.category,
-                            "First Input Delay":
-                            json.loadingExperience.metrics.FIRST_INPUT_DELAY_MS.category
-                        };
-                        that.showCruxContent(cruxMetrics);
                         const lighthouse = json.lighthouseResult;
+                        that.result = JSON.stringify(lighthouse);
                         const lighthouseMetrics = {
                             "First Contentful Paint":
                             lighthouse.audits["first-contentful-paint"].displayValue,
@@ -101,16 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById("result").appendChild(page);
             },
 
-            showCruxContent(cruxMetrics) {
-                const cruxHeader = document.createElement("h2");
-                cruxHeader.textContent = "Chrome User Experience Report Results";
-                document.getElementById("result").appendChild(cruxHeader);
-                for (const key in cruxMetrics) {
-                    const p = document.createElement("p");
-                    p.textContent = `${key}: ${cruxMetrics[key]}`;
-                    document.getElementById("result").appendChild(p);
-                }
-            },
 
             showLighthouseContent(lighthouseMetrics) {
                 const lighthouseHeader = document.createElement("h2");
@@ -120,47 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const p = document.createElement("p");
                     p.textContent = `${key}: ${lighthouseMetrics[key]}`;
                     document.getElementById("result").appendChild(p);
-                }
-            },
-            findLinks() {
-                const validUrl = require("valid-url");
-                const that = this;
-                if (validUrl.isUri(this.url)) {
-                    this.$axios
-                        .$get("https://cors-anywhere.herokuapp.com/" + this.url)
-                        .then(response => {
-                            const cheerio = require("cheerio");
-                            var $ = cheerio.load(response);
-
-                            let unfilteredLinks = $("a[href]")
-                                .toArray()
-                                .map(a => a.attribs.href);
-                            const humanizeString = require("humanize-string");
-
-                            that.relatedLinks = [
-                                ...unfilteredLinks
-                                    .filter(link =>
-                                        link.match(/^https:\/\/([a-zA-Z\.-]*)(\/[\w\.-]+\/*){1}/)
-                                    )
-                                    .map(link =>
-                                        link
-                                            .match(/^https:\/\/([a-zA-Z\.-]*)(\/[\w\.-]+\/*){1}/, "")[0]
-                                            .replace(/^https:\/\/([a-zA-Z\.-]*)/, "")
-                                    ),
-                                ...unfilteredLinks
-                                    .filter(a => a.match(/^(\/[\w-]+\/)$/))
-                                    .map(link => link.match(/^(\/[\w-]+\/)$/)[0])
-                            ].map(link => {
-                                const name = humanizeString(
-                                    link.replace("/", "").replace("/", "")
-                                );
-                                return {name: name, value: that.url + link};
-                            });
-                            this.relatedLinks = [...new Set(array.map(item => item.value))];
-
-                            console.log(that.relatedLinks);
-                            //.filter((value, index, self) => self.indexOf(value) === index);
-                        });
                 }
             }
         }

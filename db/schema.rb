@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_28_165503) do
+ActiveRecord::Schema.define(version: 2020_04_07_142007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "overseers", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -30,6 +37,24 @@ ActiveRecord::Schema.define(version: 2019_12_28_165503) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_overseers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_overseers_on_reset_password_token", unique: true
+  end
+
+  create_table "swish_categories", force: :cascade do |t|
+    t.bigint "swish_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_swish_categories_on_category_id"
+    t.index ["swish_id"], name: "index_swish_categories_on_swish_id"
+  end
+
+  create_table "swishes", force: :cascade do |t|
+    t.string "url"
+    t.jsonb "data"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_swishes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,4 +74,7 @@ ActiveRecord::Schema.define(version: 2019_12_28_165503) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "swish_categories", "categories"
+  add_foreign_key "swish_categories", "swishes"
+  add_foreign_key "swishes", "users"
 end
