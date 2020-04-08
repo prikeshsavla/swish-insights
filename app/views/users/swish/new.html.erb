@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2"><%= controller_path.split('/').last.to_s.titleize %></h1>
+  <h1 class="h2"><%= action_name.titleize %> <%= controller_path.split('/').last.to_s.titleize %></h1>
 </div>
 <div class="row">
   <div class="col-md-12">
@@ -7,12 +7,12 @@
       <form action="#" @submit.prevent="run">
         <div class="form-group">
           <label for="text">URL</label>
-          <div class="input-group">
+          <div class="input-group w-50">
             <input id="text" name="text" placeholder="example.com" type="text" v-model="url" class="form-control">
           </div>
         </div>
         <div class="form-group">
-          <label>Category (Optional) (Performance in auto selected)</label>
+          <label>Category (Optional) (Performance is auto selected)</label>
           <div>
             <div class="custom-control custom-checkbox custom-control-inline">
               <input name="category" v-model="categories" id="category_0" type="checkbox" class="custom-control-input" value="accessibility">
@@ -40,9 +40,26 @@
           <button name="submit" type="submit" @click="run" class="btn btn-primary">Submit</button>
         </div>
 
-
         <h3>Result</h3>
         <div class="notification" id="result"></div>
+        <table class="table table-sm w-50 mt-4">
+          <tr v-for="(metric) in lighthouseMetrics">
+            <th>{{ metric.name }}</th>
+            <td> {{ metric.value }}</td>
+          </tr>
+        </table>
+
+        <p>
+          <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Show Result JSON
+          </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+          <div class="preview-json">
+            <pre v-html="result"></pre>
+          </div>
+        </div>
+
       </form>
 
     </div>

@@ -7,6 +7,24 @@
 
 import Vue from 'vue'
 
+function syntaxHighlight(json) {
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     var app = new Vue({
@@ -19,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
             relatedLinks: [],
             loadingResults: false,
             categories: ["performance"],
-            result: ""
-
+            result: "",
+            lighthouseMetrics: []
         },
 
         methods: {
@@ -48,19 +66,45 @@ document.addEventListener('DOMContentLoaded', () => {
                         // to learn more about each of the properties in the response object.
                         that.showInitialContent(json.id);
                         const lighthouse = json.lighthouseResult;
-                        that.result = JSON.stringify(lighthouse);
-                        const lighthouseMetrics = {
-                            "First Contentful Paint":
-                            lighthouse.audits["first-contentful-paint"].displayValue,
-                            "Speed Index": lighthouse.audits["speed-index"].displayValue,
-                            "Time To Interactive": lighthouse.audits.interactive.displayValue,
-                            "First Meaningful Paint":
-                            lighthouse.audits["first-meaningful-paint"].displayValue,
-                            "First CPU Idle": lighthouse.audits["first-cpu-idle"].displayValue,
-                            "Estimated Input Latency":
-                            lighthouse.audits["estimated-input-latency"].displayValue
-                        };
-                        that.showLighthouseContent(lighthouseMetrics);
+
+                        that.result = syntaxHighlight(JSON.stringify(lighthouse, undefined, 2));
+
+                        const lighthouseMetrics = [{
+                            "name": "Performance",
+                            "value": lighthouse.categories["performance"] ? lighthouse.categories["performance"].score : null
+                        }, {
+                            "name": "Accessibility",
+                            "value": lighthouse.categories["accessibility"] ? lighthouse.categories["accessibility"].score : null
+                        }, {
+                            "name": "Best-Practices",
+                            "value": lighthouse.categories["best-practices"] ? lighthouse.categories["best-practices"].score : null
+                        }, {
+                            "name": "PWA",
+                            "value": lighthouse.categories["pwa"] ? lighthouse.categories["pwa"].score : null
+                        }, {
+                            "name": "SEO",
+                            "value": lighthouse.categories["seo"] ? lighthouse.categories["seo"].score : null
+                        }, {
+                            "name": "First Contentful Paint",
+                            "value": lighthouse.audits["first-contentful-paint"].displayValue
+                        }, {
+                            "name": "Speed Index",
+                            "value": lighthouse.audits["speed-index"].displayValue
+                        }, {
+                            "name": "Time To Interactive",
+                            "value": lighthouse.audits.interactive.displayValue
+                        }, {
+                            "name": "First Meaningful Paint",
+                            "value": lighthouse.audits["first-meaningful-paint"].displayValue
+                        }, {
+                            "name": "First CPU Idle",
+                            "value": lighthouse.audits["first-cpu-idle"].displayValue
+                        }, {
+                            "name": "Estimated Input Latency",
+                            "value": lighthouse.audits["estimated-input-latency"].displayValue
+                        }];
+                        that.lighthouseMetrics = lighthouseMetrics;
+
                         $.ajaxSetup({
                             beforeSend: function (xhr) {
                                 xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
@@ -108,9 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             showInitialContent(id) {
                 document.getElementById("result").innerHTML = "";
-                const title = document.createElement("h1");
-                title.textContent = "PageSpeed Insights API Demo";
-                document.getElementById("result").appendChild(title);
                 const page = document.createElement("p");
                 page.textContent = `Page tested: ${id}`;
                 document.getElementById("result").appendChild(page);

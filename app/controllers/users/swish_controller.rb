@@ -1,9 +1,10 @@
 class Users::SwishController < Users::BaseController
+  before_action :set_swish, only: [:show]
   def index
-    @swishes = Swish.all.where(user: current_user)
+    @swishes = Swish.all.where(user: current_user).reverse
   end
 
-  def new
+  def show
 
   end
 
@@ -22,5 +23,9 @@ class Users::SwishController < Users::BaseController
     render json: {"value": 2}, status: 200
   end
 
-
+  private
+  def set_swish
+    @swish = Swish.find(params[:id])
+  end
+  attr_accessor :swish
 end

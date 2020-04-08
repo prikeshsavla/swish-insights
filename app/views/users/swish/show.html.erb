@@ -3,6 +3,29 @@
 </div>
 <div class="row">
   <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header bg-primary text-white">
+        Swish #<%= @swish.id %>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"><%= @swish.url %>
+          <a href="<%= @swish.url %>" target="_blank" title="Open Link"><i class='fas fa-external-link-alt'></i></a>
+        </h5>
+        <div class="card-text">
+        </div>
+        <% if @swish.data.present? %>
+          <table class="table table-sm w-50 mt-4">
+            <% @swish.data.each do |index, value| %>
+              <tr>
+                <th><%= value["name"] %></th>
+                <td><%= value["value"] %></td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
 
+        <a href="#" class="btn btn-primary">Show similar</a>
+      </div>
+    </div>
   </div>
 </div>
