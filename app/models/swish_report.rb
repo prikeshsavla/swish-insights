@@ -1,0 +1,2 @@
+class SwishReport < ApplicationRecord
+end

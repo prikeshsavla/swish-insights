@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_07_142007) do
+ActiveRecord::Schema.define(version: 2020_04_13_031456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,25 @@ ActiveRecord::Schema.define(version: 2020_04_07_142007) do
     t.index ["swish_id"], name: "index_swish_categories_on_swish_id"
   end
 
+  create_table "swish_reports", force: :cascade do |t|
+    t.float "performance"
+    t.float "accessibility"
+    t.float "best_practices"
+    t.float "pwa"
+    t.float "seo"
+    t.float "first_contentful_paint"
+    t.float "speed_index"
+    t.float "time_to_interactive"
+    t.float "first_meaningful_paint"
+    t.float "first_cpu_idle"
+    t.float "estimated_input_latency"
+    t.binary "data"
+    t.bigint "swish_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["swish_id"], name: "index_swish_reports_on_swish_id"
+  end
+
   create_table "swishes", force: :cascade do |t|
     t.string "url"
     t.jsonb "data"
@@ -76,5 +95,6 @@ ActiveRecord::Schema.define(version: 2020_04_07_142007) do
 
   add_foreign_key "swish_categories", "categories"
   add_foreign_key "swish_categories", "swishes"
+  add_foreign_key "swish_reports", "swishes"
   add_foreign_key "swishes", "users"
 end
