@@ -6,9 +6,3 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
- Category.create(name: "accessibility", value: "accessibility");
- Category.create(name: "best-practices", value: "best-practices");
- Category.create(name: "performance", value: "performance");
- Category.create(name: "pwa", value: "pwa");
- Category.create(name: "seo", value: "seo");

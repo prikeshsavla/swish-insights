@@ -1,30 +1,80 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2"><%= controller_path.split('/').last.to_s.titleize %></h1>
+  <h1 class="h2"> Swish #<%= @swish.id %>
+    <small><a href="<%= @swish.url %>" target="_blank" title="Open Link"><i class='fas fa-external-link-alt'></i></a></small>
+  </h1>
 </div>
 <div class="row">
   <div class="col-md-12">
     <div class="card ">
-      <div class="card-header bg-primary text-white">
-        Swish #<%= @swish.id %>
-      </div>
       <div class="card-body">
-        <h5 class="card-title"><%= @swish.url %>
-          <a href="<%= @swish.url %>" target="_blank" title="Open Link"><i class='fas fa-external-link-alt'></i></a>
-        </h5>
-        <div class="card-text">
-        </div>
-        <% if @swish.data.present? %>
-          <table class="table table-sm w-50 mt-4">
-            <% @swish.data.each do |index, value| %>
+        <div class="table-responsive">
+          <table class="table table-sm mt-4">
+            <thead>
+            <tr>
+              <th> Created At</th>
+              <th>Accessibility</th>
+              <th>Performance</th>
+              <th>PWA</th>
+              <th>SEO</th>
+              <th>Best-Practices</th>
+              <th>First Contentful Paint</th>
+              <th>First CPU Idle</th>
+              <th>First Meaningful Paint</th>
+              <th>Estimated Input Latency</th>
+              <th>Time To Interactive</th>
+              <th>Speed Index</th>
+            </tr>
+            </thead>
+            <% @swish.swish_reports.each do |swish_report| %>
               <tr>
-                <th><%= value["name"] %></th>
-                <td><%= value["value"] %></td>
+                <th style="width: 6rem"><%= swish_report.created_at.to_formatted_s(:short) %></th>
+                <td> <%= swish_report.accessibility %></td>
+                <td> <%= swish_report.performance %></td>
+                <td> <%= swish_report.pwa %></td>
+                <td> <%= swish_report.seo %></td>
+                <td> <%= swish_report.best_practices %></td>
+                <td> <%= swish_report.first_contentful_paint %></td>
+                <td> <%= swish_report.first_cpu_idle %></td>
+                <td> <%= swish_report.first_meaningful_paint %></td>
+                <td> <%= swish_report.estimated_input_latency %></td>
+                <td> <%= swish_report.time_to_interactive %></td>
+                <td> <%= swish_report.speed_index %></td>
+              </tr>
+            <% end %>
+
+          </table>
+
+          <table class="table table-sm mt-4">
+            <thead>
+            <tr>
+              <th> Statistic</th>
+              <th>Accessibility</th>
+              <th>Performance</th>
+              <th>PWA</th>
+              <th>SEO</th>
+              <th>Best-Practices</th>
+              <th>First Contentful Paint</th>
+              <th>First CPU Idle</th>
+              <th>First Meaningful Paint</th>
+              <th>Estimated Input Latency</th>
+              <th>Time To Interactive</th>
+              <th>Speed Index</th>
+            </tr>
+            </thead>
+
+
+            <% @swish_report_description.each do |key, value| %>
+              <tr>
+                <th>
+                  <%= key %>
+                </th>
+                <% value.each do |metric| %>
+                  <td><%= metric.round(2) %></td>
+                <% end %>
               </tr>
             <% end %>
           </table>
-        <% end %>
-
-        <a href="#" class="btn btn-primary">Show similar</a>
+        </div>
       </div>
     </div>
   </div>

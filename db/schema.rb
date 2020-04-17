@@ -39,15 +39,6 @@ ActiveRecord::Schema.define(version: 2020_04_13_031456) do
     t.index ["reset_password_token"], name: "index_overseers_on_reset_password_token", unique: true
   end
 
-  create_table "swish_categories", force: :cascade do |t|
-    t.bigint "swish_id", null: false
-    t.bigint "category_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id"], name: "index_swish_categories_on_category_id"
-    t.index ["swish_id"], name: "index_swish_categories_on_swish_id"
-  end
-
   create_table "swish_reports", force: :cascade do |t|
     t.float "performance"
     t.float "accessibility"
@@ -93,8 +84,6 @@ ActiveRecord::Schema.define(version: 2020_04_13_031456) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "swish_categories", "categories"
-  add_foreign_key "swish_categories", "swishes"
   add_foreign_key "swish_reports", "swishes"
   add_foreign_key "swishes", "users"
 end

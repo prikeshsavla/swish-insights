@@ -11,6 +11,7 @@
         <tr>
           <th>ID</th>
           <th>URL</th>
+          <th>Reports</th>
           <th>Created At</th>
         </tr>
         </thead>
@@ -23,6 +24,9 @@
             <td>
               <%= swish.url %>
               <a href="<%= swish.url %>" target="_blank" title="Open Link"><i class='fas fa-external-link-alt'></i></a>
+            </td>
+            <td>
+              <%= swish.swish_reports.count %>
             </td>
             <td>
               <%= swish.created_at.to_formatted_s(:long) %>

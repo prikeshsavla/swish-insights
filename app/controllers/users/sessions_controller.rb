@@ -1,5 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   layout 'users/layouts/application'
+
   def destroy
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
     reset_session
@@ -9,11 +10,11 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   private
-    def after_sign_in_path_for(resource_or_scope)
-      users_swish_index_path
-    end
+  def after_sign_in_path_for(resource_or_scope)
+    users_swish_index_path
+  end
 
-    def after_sign_out_path_for(resource_or_scope)
-      new_user_session_path
-    end
+  def after_sign_out_path_for(resource_or_scope)
+    new_user_session_path
+  end
 end
