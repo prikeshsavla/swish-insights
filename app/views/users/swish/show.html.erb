@@ -1,81 +1,46 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2"> Swish #<%= @swish.id %>
+  <h1 class="h2"> Swish "<%= @swish.url %>"
     <small><a href="<%= @swish.url %>" target="_blank" title="Open Link"><i class='fas fa-external-link-alt'></i></a></small>
+
+
   </h1>
+
+  <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target=".collapse-stats" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Show
+    Stats
+  </button>
+
 </div>
 <div class="row">
   <div class="col-md-12">
-    <div class="card ">
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-sm mt-4">
-            <thead>
-            <tr>
-              <th> Created At</th>
-              <th>Accessibility</th>
-              <th>Performance</th>
-              <th>PWA</th>
-              <th>SEO</th>
-              <th>Best-Practices</th>
-              <th>First Contentful Paint</th>
-              <th>First CPU Idle</th>
-              <th>First Meaningful Paint</th>
-              <th>Estimated Input Latency</th>
-              <th>Time To Interactive</th>
-              <th>Speed Index</th>
-            </tr>
-            </thead>
-            <% @swish.swish_reports.each do |swish_report| %>
-              <tr>
-                <th style="width: 6rem"><%= swish_report.created_at.to_formatted_s(:short) %></th>
-                <td> <%= swish_report.accessibility %></td>
-                <td> <%= swish_report.performance %></td>
-                <td> <%= swish_report.pwa %></td>
-                <td> <%= swish_report.seo %></td>
-                <td> <%= swish_report.best_practices %></td>
-                <td> <%= swish_report.first_contentful_paint %></td>
-                <td> <%= swish_report.first_cpu_idle %></td>
-                <td> <%= swish_report.first_meaningful_paint %></td>
-                <td> <%= swish_report.estimated_input_latency %></td>
-                <td> <%= swish_report.time_to_interactive %></td>
-                <td> <%= swish_report.speed_index %></td>
-              </tr>
-            <% end %>
-
-          </table>
-
-          <table class="table table-sm mt-4">
-            <thead>
-            <tr>
-              <th> Statistic</th>
-              <th>Accessibility</th>
-              <th>Performance</th>
-              <th>PWA</th>
-              <th>SEO</th>
-              <th>Best-Practices</th>
-              <th>First Contentful Paint</th>
-              <th>First CPU Idle</th>
-              <th>First Meaningful Paint</th>
-              <th>Estimated Input Latency</th>
-              <th>Time To Interactive</th>
-              <th>Speed Index</th>
-            </tr>
-            </thead>
 
 
-            <% @swish_report_description.each do |key, value| %>
-              <tr>
-                <th>
-                  <%= key %>
-                </th>
-                <% value.each do |metric| %>
-                  <td><%= metric.round(2) %></td>
-                <% end %>
-              </tr>
-            <% end %>
-          </table>
+    <div id="accordion">
+      <% @swish_reports.each_with_index do |(url, swish_reports), index| %>
+        <div class="card">
+          <div class="card-header p-0" id="headingOne">
+
+            <button class="btn btn-default btn-block text-left" data-toggle="collapse" data-target="#collapse-<%= index + 1 %>" aria-expanded="true" aria-controls="collapse-<%= index + 1 %>">
+              Path: <%= URI(url).path == "" ? "/" : URI(url).path %>
+            </button>
+
+          </div>
+
+          <div id="collapse-<%= index + 1 %>" class="collapse
+            <% if index == 0 %>show
+            <% end %>" aria-labelledby="heading-<%= index + 1 %>" data-parent="#accordion">
+            <div class="card-body">
+              <%= render partial: 'swish_report_table', locals: {swish_reports: swish_reports, swish_reports_description: @swish_reports_description[url]} %>
+
+            </div>
+          </div>
         </div>
-      </div>
+      <% end %>
+
     </div>
+    <!--    <div class="card ">-->
+    <!--      <div class="card-body">-->
+    <%#= render partial: 'swish_report_table', locals: {swish_reports: @swish.swish_reports, swish_reports_description: @swish_reports_description} %>
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 </div>

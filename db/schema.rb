@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_13_031456) do
+ActiveRecord::Schema.define(version: 2020_04_18_033027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,10 +51,11 @@ ActiveRecord::Schema.define(version: 2020_04_13_031456) do
     t.float "first_meaningful_paint"
     t.float "first_cpu_idle"
     t.float "estimated_input_latency"
-    t.binary "data"
     t.bigint "swish_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "gist_id"
+    t.string "url"
     t.index ["swish_id"], name: "index_swish_reports_on_swish_id"
   end
 

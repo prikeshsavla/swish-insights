@@ -6,26 +6,16 @@ class Users::SwishController < Users::BaseController
   end
 
   def show
-    @swish_report_description = SwishReport.describe(@swish.swish_reports);
+    @swish_reports = @swish.swish_reports.group_by(&:url)
+    @swish_reports_description = {}
+    @swish_reports.each do |url, report|
+      @swish_reports_description[url] = SwishReport.describe(report)
+    end
+      #@swish_reports_description = SwishReport.describe(@swish.swish_reports);
   end
 
   def create
-    uri = URI(params[:swish][:url]).host
-    uri = "https://" + uri
-    swish = Swish.find_or_initialize_by(url: uri)
-
-    if swish.new_record?
-      swish.user = current_user
-      swish.save!
-    end
-    report = swish.swish_reports.build
-    data = params[:swish][:report]
-    g = Gist.gist data, {access_token: "a6a581d38a1a5ecbbb046194e3e89dbe0f098a63", filename: URI(params[:swish][:url]).host + '.lighthouse.report.json'}
-    print("--------------")
-    print(g['id'])
-    print("--------------")
-    report.map_data_to_fields(params[:swish][:data])
-    report.save!
+    ::Services::SwishReport::SaveReport.new.call(params, current_user)
     render json: {"value": 2}, status: 200
   end
 

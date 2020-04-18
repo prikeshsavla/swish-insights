@@ -2,11 +2,11 @@ class SwishReport < ApplicationRecord
   has_one :swish
 
   def map_data_to_fields(data)
-    self.accessibility ||= data['Accessibility']
-    self.performance ||= data['Performance']
-    self.pwa ||= data['PWA']
-    self.seo ||= data['SEO']
-    self.best_practices ||= data['Best-Practices']
+    self.accessibility ||= data['Accessibility'].to_f*100
+    self.performance ||= data['Performance'].to_f*100
+    self.pwa ||= data['PWA'].to_f*100
+    self.seo ||= data['SEO'].to_f*100
+    self.best_practices ||= data['Best-Practices'].to_f*100
     self.first_contentful_paint ||= data['First Contentful Paint']
     self.first_cpu_idle ||= data['First CPU Idle']
     self.first_meaningful_paint ||= data['First Meaningful Paint']
