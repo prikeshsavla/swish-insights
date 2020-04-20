@@ -21,14 +21,14 @@
 
             <button class="btn btn-default btn-block text-left" data-toggle="collapse" data-target="#collapse-<%= index + 1 %>" aria-expanded="true" aria-controls="collapse-<%= index + 1 %>">
               Path: <%= URI(url).path == "" ? "/" : URI(url).path %>
+              <small class="float-right"><a href="<%= url %>" target="_blank" title="Open Link"><i class='fas fa-external-link-alt'></i></a></small>
             </button>
-
           </div>
 
           <div id="collapse-<%= index + 1 %>" class="collapse
             <% if index == 0 %>show
             <% end %>" aria-labelledby="heading-<%= index + 1 %>" data-parent="#accordion">
-            <div class="card-body">
+            <div class="">
               <%= render partial: 'swish_report_table', locals: {swish_reports: swish_reports, swish_reports_description: @swish_reports_description[url]} %>
 
             </div>

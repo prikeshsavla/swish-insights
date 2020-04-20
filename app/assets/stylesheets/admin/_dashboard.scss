@@ -1,6 +1,7 @@
 body {
   font-size: .875rem;
 }
+
 .feather {
   width: 16px;
   height: 16px;
@@ -150,4 +151,12 @@ $navbar-height: 50px;
 
 [v-cloak] {
   display: none;
+}
+
+a {
+  color: lighten($primary, 10%);
+
+  &:hover {
+    color: $primary
+  }
 }

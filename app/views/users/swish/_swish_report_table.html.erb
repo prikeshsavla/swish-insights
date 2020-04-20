@@ -1,6 +1,6 @@
 <div class="table-responsive">
-  <table class="table table-sm">
-    <thead>
+  <table class="table ">
+    <thead >
     <tr>
       <th> Created At</th>
       <th>Accessibility</th>
@@ -17,20 +17,30 @@
       <th>View Report</th>
     </tr>
     </thead>
-    <% swish_reports.each do |swish_report| %>
+    <% swish_reports.reverse.each_with_index do |swish_report, index| %>
       <tr>
         <th style="width: 6rem"><%= swish_report.created_at.to_formatted_s(:short) %></th>
-        <td> <%= swish_report.accessibility %></td>
-        <td> <%= swish_report.performance %></td>
-        <td> <%= swish_report.pwa %></td>
-        <td> <%= swish_report.seo %></td>
-        <td> <%= swish_report.best_practices %></td>
-        <td> <%= swish_report.first_contentful_paint %>s</td>
-        <td> <%= swish_report.first_cpu_idle %>s</td>
-        <td> <%= swish_report.first_meaningful_paint %>s</td>
-        <td> <%= swish_report.estimated_input_latency %>s</td>
-        <td> <%= swish_report.time_to_interactive %>s</td>
-        <td> <%= swish_report.speed_index %></td>
+        <td>  <%== metric_with_change(swish_report, :accessibility, swish_reports, index) %>     </td>
+        <td>  <%== metric_with_change(swish_report, :performance, swish_reports, index) %>  </td>
+        <td>  <%== metric_with_change(swish_report, :pwa, swish_reports, index) %>  </td>
+        <td>  <%== metric_with_change(swish_report, :seo, swish_reports, index) %>  </td>
+        <td>  <%== metric_with_change(swish_report, :best_practices, swish_reports, index) %>  </td>
+        <td>  <%== metric_with_change(swish_report, :first_contentful_paint, swish_reports, index) %>
+
+        </td>
+        <td>  <%== metric_with_change(swish_report, :first_cpu_idle, swish_reports, index, 's', true) %>
+
+        </td>
+        <td>  <%== metric_with_change(swish_report, :first_meaningful_paint, swish_reports, index, 's', true) %>
+
+        </td>
+        <td>  <%== metric_with_change(swish_report, :estimated_input_latency, swish_reports, index, 's', true) %>
+
+        </td>
+        <td>  <%== metric_with_change(swish_report, :time_to_interactive, swish_reports, index, 's', true) %>
+
+        </td>
+        <td>  <%== metric_with_change(swish_report, :speed_index, swish_reports, index, 's', true) %>  </td>
         <td>
           <a href="https://googlechrome.github.io/lighthouse/viewer/?gist=<%= swish_report.gist_id %>" target="_blank">View</a>
         </td>
