@@ -17,7 +17,7 @@
       <th>View Report</th>
     </tr>
     </thead>
-    <% swish_reports.reverse.each_with_index do |swish_report, index| %>
+    <% swish_reports.each_with_index do |swish_report, index| %>
       <tr>
         <th style="width: 6rem"><%= swish_report.created_at.to_formatted_s(:short) %></th>
         <td>  <%== metric_with_change(swish_report, :accessibility, swish_reports, index) %>     </td>

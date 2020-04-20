@@ -6,12 +6,11 @@ class Users::SwishController < Users::BaseController
   end
 
   def show
-    @swish_reports = @swish.swish_reports.group_by(&:url)
+    @swish_reports = @swish.swish_reports.reverse.group_by(&:url)
     @swish_reports_description = {}
     @swish_reports.each do |url, report|
       @swish_reports_description[url] = SwishReport.describe(report)
     end
-      #@swish_reports_description = SwishReport.describe(@swish.swish_reports);
   end
 
   def create
