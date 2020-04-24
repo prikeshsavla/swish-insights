@@ -31,6 +31,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # User Auth
 gem 'devise'
 gem 'devise-bootstrap-views', '~> 1.0'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
 
 gem 'daru'
 gem 'gist'

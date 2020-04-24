@@ -10,8 +10,9 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   private
+
   def after_sign_in_path_for(resource_or_scope)
-    users_swish_index_path
+    new_users_swish_path
   end
 
   def after_sign_out_path_for(resource_or_scope)
