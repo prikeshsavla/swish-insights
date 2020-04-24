@@ -6,13 +6,32 @@
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
 import Vue from 'vue'
+import Typed from "typed.js/src/typed";
 
 // document.addEventListener('DOMContentLoaded', () => {
 //     startVueForm()
 //
 // });
 document.addEventListener('turbolinks:load', () => {
-    startVueForm()
+    startVueForm();
+//     var typed = new Typed('.explain', {
+//             strings: [
+//                 `<strong> Performance</strong>:
+//                     Lighthouse returns a Performance score between 0 and 100. 0 is the lowest possible score.
+//                     100 is the best possible score which represents the 98th percentile, a top-performing site.
+//                     A score of 50 represents the 75th percentile.`,
+//                 `<strong>PWA</strong>: The PWA audits are based on the <a href="https://web.dev/pwa-checklist/#baseline">Baseline PWA Checklist</a>,
+// which lists 14 requirements. Lighthouse has automated audits for 11 of the 14 requirements. `,
+//                 `<strong>Accessibility</strong>: The Accessibility score is a weighted average of all the accessibility audits. See <a href="https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0" class="external">Scoring
+// Details</a> for a full list of how each audit is weighted. The heavier-weighted
+// audits have a bigger impact on your score.`
+//
+//             ],
+//             typeSpeed:
+//                 30
+//         })
+//     ;
+
 
 });
 
@@ -22,8 +41,9 @@ function startVueForm() {
             el: '#app',
             data: {
 
-                url: "http://prikeshsavla.com",
+                url: "",
                 relatedLinks: [],
+                errorMessage: "",
                 loadingResults: false,
                 categories: ["accessibility",
                     "best-practices",
@@ -46,10 +66,20 @@ function startVueForm() {
                     });
                     return result.join(" ");
                 },
+                isValidUrl(str) {
+                    const regexp = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+                    return regexp.test(str);
+                },
                 run() {
                     this.loadingResults = true;
-                    const url = this.setUpQuery();
-                    console.log("Run: " + url);
+                    if (!this.isValidUrl(this.url)) {
+                        this.loadingResults = false;
+                        this.errorMessage = "Please enter a valid URL";
+                        return false;
+                    }
+                    this.errorMessage = "";
+                    const queryUrl = this.url.replace(/\/$/, "");
+                    const url = this.setUpQuery(queryUrl);
 
                     const that = this;
                     fetch(url)
@@ -98,7 +128,7 @@ function startVueForm() {
 
                                 data: {
                                     "swish": {
-                                        url: that.url,
+                                        url: queryUrl,
                                         data: lighthouseMetrics,
                                         report: JSON.stringify(lighthouse),
                                         categories: that.categories
@@ -106,20 +136,22 @@ function startVueForm() {
                                 },
                                 success: (data) => {
                                     console.log(data);
-                                    that.loadingResults = false;
                                 },
                                 error: (data) => {
                                     console.log(data);
+                                },
+                                complete: () => {
                                     that.loadingResults = false;
                                 }
                             });
                         });
                 },
 
-                setUpQuery() {
+                setUpQuery(queryUrl) {
                     const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
+
                     const parameters = {
-                        url: encodeURIComponent(this.url),
+                        url: encodeURIComponent(queryUrl),
                         category: this.categories
                     };
                     let query = `${api}?key=AIzaSyDAnEMnj6igIF_WRqL5mgzumTKWgN_zojs`;

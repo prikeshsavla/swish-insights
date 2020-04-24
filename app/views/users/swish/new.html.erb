@@ -4,11 +4,14 @@
 <div class="row">
   <div class="col-md-12">
     <div id="app">
-       <form action="#" @submit.prevent="run">
+      <form action="#" @submit.prevent="run">
         <div class="form-group  ">
           <label for="text">URL</label>
           <div class="input-group w-50">
-            <input id="text" name="text" placeholder="example.com" type="text" v-model="url" class="form-control form-control-lg">
+            <input id="text" name="text" placeholder="https://prikeshsavla.com" type="text" v-model="url" class="form-control form-control-lg" :class="{'is-invalid': !!errorMessage}">
+            <div class="invalid-feedback">
+              {{errorMessage}}
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -19,6 +22,17 @@
           <button name="submit" type="submit" class="btn btn-primary" v-if="!loadingResults">Submit</button>
         </div>
       </form>
+
+      <button class="btn btn-sm btn-dark">Hide Animation</button>
+      <div class="row">
+        <div class="col-sm-6">
+          <span class="explain ">
+
+          </span>
+        </div>
+      </div>
+
+
       <div class="result" v-show="result != null">
 
         <h3>Result</h3>
