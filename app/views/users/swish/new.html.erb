@@ -1,63 +1,66 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2"><%= action_name.titleize %> <%= controller_path.split('/').last.to_s.titleize %></h1>
+  <h1 class="h2 text-center w-100" ><%= action_name.titleize %> <%= controller_path.split('/').last.to_s.titleize %></h1>
 </div>
 <div class="row">
   <div class="col-md-12">
     <div id="app">
-      <form action="#" @submit.prevent="run">
-        <div class="form-group  ">
-          <label for="text">URL</label>
-          <div class="input-group w-50">
-            <input id="text" name="text" placeholder="https://prikeshsavla.com" type="text" v-model="url" class="form-control form-control-lg" :class="{'is-invalid': !!errorMessage}">
+      <form action="#" @submit.prevent="run" class="text-center">
+
+        <div class="form-group  mt-5">
+          <!--          <label for="text">URL</label>-->
+          <div class="input-group w-50 mx-auto">
+            <input id="text" name="text" placeholder="https://prikeshsavla.com" type="text" v-model="url" class="form-control form-control-lg rounded " :class="{'is-invalid': !!errorMessage}" :readonly="loadingResults" :disabled="loadingResults">
             <div class="invalid-feedback">
               {{errorMessage}}
             </div>
           </div>
         </div>
+
         <div class="form-group">
-          <button class="btn btn-primary" type="button" disabled v-if="loadingResults">
+          <button class="btn btn-primary btn-xl rounded-pill p-3" style="width: 10rem" type="button" disabled v-if="loadingResults">
             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
             Loading...
           </button>
-          <button name="submit" type="submit" class="btn btn-primary" v-if="!loadingResults">Submit</button>
+          <button name="submit" type="submit" class="btn btn-primary btn-xl rounded-pill p-3" style="width: 10rem" v-if="!loadingResults">Create
+            a Swish
+          </button>
         </div>
       </form>
 
-      <button class="btn btn-sm btn-dark">Hide Animation</button>
-      <div class="row">
-        <div class="col-sm-6">
-          <span class="explain ">
 
-          </span>
-        </div>
-      </div>
+      <transition name="fade">
+        <div class="result row" v-show="result != null && !loadingResults">
+          <div class="mx-auto col-lg-6">
+            <h3>Result <small class="float-right">
+              <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" v-show="result != null">
+                Show Result JSON
+              </button>
+            </small></h3>
+            <div class="notification" id="result"></div>
 
-
-      <div class="result" v-show="result != null">
-
-        <h3>Result</h3>
-        <div class="notification" id="result"></div>
-        <table class="table table-sm w-50 mt-4">
-          <tr v-for="(value, metric) in lighthouseMetrics">
-            <th>{{ metric }}</th>
-            <td> {{ value }}</td>
-          </tr>
-        </table>
-
-        <p v-show="result != null">
-          <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Show Result JSON
-          </button>
-        </p>
-        <div class="collapse" id="collapseExample">
-          <div class="preview-json">
-            <pre v-html="result"></pre>
+            <table class="table table-sm mt-4">
+              <tr v-for="(value, metric) in lighthouseMetrics">
+                <th>{{ metric }}</th>
+                <td> {{ value }}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-12">
+            <div class="collapse" id="collapseExample">
+              <div class="preview-json">
+                <pre v-html="result"></pre>
+              </div>
+            </div>
           </div>
         </div>
-
+      </transition>
+      <div class="row" v-show="result == null && loadingResults ">
+        <div class="col-sm-6 mx-auto">
+          <span class="explain"></span>
+        </div>
       </div>
 
-
     </div>
+
   </div>
 </div>

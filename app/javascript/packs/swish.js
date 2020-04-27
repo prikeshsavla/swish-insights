@@ -14,23 +14,6 @@ import Typed from "typed.js/src/typed";
 // });
 document.addEventListener('turbolinks:load', () => {
     startVueForm();
-//     var typed = new Typed('.explain', {
-//             strings: [
-//                 `<strong> Performance</strong>:
-//                     Lighthouse returns a Performance score between 0 and 100. 0 is the lowest possible score.
-//                     100 is the best possible score which represents the 98th percentile, a top-performing site.
-//                     A score of 50 represents the 75th percentile.`,
-//                 `<strong>PWA</strong>: The PWA audits are based on the <a href="https://web.dev/pwa-checklist/#baseline">Baseline PWA Checklist</a>,
-// which lists 14 requirements. Lighthouse has automated audits for 11 of the 14 requirements. `,
-//                 `<strong>Accessibility</strong>: The Accessibility score is a weighted average of all the accessibility audits. See <a href="https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0" class="external">Scoring
-// Details</a> for a full list of how each audit is weighted. The heavier-weighted
-// audits have a bigger impact on your score.`
-//
-//             ],
-//             typeSpeed:
-//                 30
-//         })
-//     ;
 
 
 });
@@ -51,6 +34,7 @@ function startVueForm() {
                     "pwa",
                     "seo"],
                 result: null,
+                typed: null,
                 lighthouseMetrics: []
             },
 
@@ -72,6 +56,9 @@ function startVueForm() {
                 },
                 run() {
                     this.loadingResults = true;
+                    this.result = null;
+                    this.lighthouseMetrics = [];
+                    this.showHints();
                     if (!this.isValidUrl(this.url)) {
                         this.loadingResults = false;
                         this.errorMessage = "Please enter a valid URL";
@@ -90,18 +77,17 @@ function startVueForm() {
                             that.showInitialContent(json.id);
                             const lighthouse = json.lighthouseResult;
 
-                            that.result = that.syntaxHighlight(JSON.stringify(lighthouse, undefined, 2));
 
                             const lighthouseMetrics = {
-                                "Performance": lighthouse.categories["performance"] ? lighthouse.categories["performance"].score : null
+                                "Performance": lighthouse.categories["performance"] ? lighthouse.categories["performance"].score * 100 : null
                                 ,
-                                "Accessibility": lighthouse.categories["accessibility"] ? lighthouse.categories["accessibility"].score : null
+                                "Accessibility": lighthouse.categories["accessibility"] ? lighthouse.categories["accessibility"].score * 100 : null
                                 ,
-                                "Best-Practices": lighthouse.categories["best-practices"] ? lighthouse.categories["best-practices"].score : null
+                                "Best-Practices": lighthouse.categories["best-practices"] ? lighthouse.categories["best-practices"].score * 100 : null
                                 ,
-                                "PWA": lighthouse.categories["pwa"] ? lighthouse.categories["pwa"].score : null
+                                "PWA": lighthouse.categories["pwa"] ? lighthouse.categories["pwa"].score * 100 : null
                                 ,
-                                "SEO": lighthouse.categories["seo"] ? lighthouse.categories["seo"].score : null
+                                "SEO": lighthouse.categories["seo"] ? lighthouse.categories["seo"].score * 100 : null
                                 ,
                                 "First Contentful Paint": lighthouse.audits["first-contentful-paint"].displayValue
                                 ,
@@ -115,7 +101,7 @@ function startVueForm() {
                                 ,
                                 "Estimated Input Latency": lighthouse.audits["estimated-input-latency"].displayValue
                             };
-                            that.lighthouseMetrics = lighthouseMetrics;
+
 
                             $.ajaxSetup({
                                 beforeSend: function (xhr) {
@@ -142,6 +128,8 @@ function startVueForm() {
                                 },
                                 complete: () => {
                                     that.loadingResults = false;
+                                    that.lighthouseMetrics = lighthouseMetrics;
+                                    that.result = that.syntaxHighlight(JSON.stringify(lighthouse, undefined, 2));
                                 }
                             });
                         });
@@ -172,7 +160,7 @@ function startVueForm() {
                 showInitialContent(id) {
                     document.getElementById("result").innerHTML = "";
                     const page = document.createElement("p");
-                    page.textContent = `Page tested: ${id}`;
+                    page.innerHTML = `Page tested: <a href="${id}" target="_blank"><i class="fas fa-external-link-alt" aria-hidden="true"></i> ${id}</a>`;
                     document.getElementById("result").appendChild(page);
                 },
                 syntaxHighlight(json) {
@@ -192,9 +180,34 @@ function startVueForm() {
                         }
                         return '<span class="' + cls + '">' + match + '</span>';
                     });
+                },
+
+                showHints() {
+                    if (this.typed !== null) {
+                        this.typed.destroy();
+                    }
+                    this.typed = new Typed('.explain', {
+                        strings: [
+                            `<strong> Performance</strong>:
+                    Lighthouse returns a Performance score between 0 and 100. 0 is the lowest possible score.
+                    100 is the best possible score which represents the 98th percentile, a top-performing site.
+                    A score of 50 represents the 75th percentile.`,
+                            `<strong>PWA</strong>: The PWA audits are based on the <a href="https://web.dev/pwa-checklist/#baseline">Baseline PWA Checklist</a>,
+which lists 14 requirements. Lighthouse has automated audits for 11 of the 14 requirements. `,
+                            `<strong>Accessibility</strong>: The Accessibility score is a weighted average of all the accessibility audits. See <a href="https://docs.google.com/spreadsheets/d/1Cxzhy5ecqJCucdf1M0iOzM8mIxNc7mmx107o5nj38Eo/edit#gid=0" class="external">Scoring
+Details</a> for a full list of how each audit is weighted. The heavier-weighted
+audits have a bigger impact on your score.`
+                        ],
+                        typeSpeed: 40,
+                        shuffle: true,
+                        loop: true,
+                    })
+                    ;
                 }
+
             }
 
-        });
+        })
+        ;
     }
 }

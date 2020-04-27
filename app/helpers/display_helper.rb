@@ -25,12 +25,28 @@ module DisplayHelper
 
   end
 
-  def metric_with_change(report, metric, reports, index, prefix = '', inverse = false)
+  def group_class(new_value)
+      if new_value < 50
+        'text-fail'
+      elsif new_value < 90
+        'text-average'
+      else
+        'text-pass'
+      end
+  end
+
+  def metric_with_change(report, metric, reports, index, prefix: '', inverse: false, shoe_group_color: false)
     last = index == (reports.length - 1)
     new_value = report.send(metric)
     old_value = last ? new_value : reports[index + 1].send(metric)
     [
+        "<span class='",
+        if shoe_group_color
+          group_class(new_value)
+        end,
+        "'>",
         new_value,
+        "</span>",
         prefix,
         last ? '' : "<br><small ",
         last ? '' : "class='text-#{difference_class(new_value, old_value, inverse)}'>",
