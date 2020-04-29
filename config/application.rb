@@ -36,7 +36,7 @@ module SwishRails
     config.generators.system_tests = nil
 
     LeaderboardFactory.configure do |c|
-      c.redis = Redis.new(db: 15)
+      c.redis = Redis.new
     end
   end
 end
