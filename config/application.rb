@@ -34,5 +34,9 @@ module SwishRails
     config.time_zone = 'Asia/Kolkata'
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    LeaderboardFactory.configure do |c|
+      c.redis = Redis.new(db: 15)
+    end
   end
 end

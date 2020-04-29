@@ -1,0 +1,39 @@
+<header class="masthead text-center text-white p-5">
+
+    <div class="container">
+      <h1 class="masthead-heading mb-0">Leaderboards</h1>
+      <h2 class="masthead-subheading mb-0">Website performance with Google Lighthouse v3</h2>
+      <a href="<%= new_users_swish_url %>" class="btn btn-primary btn-xl rounded-pill mt-5">
+        Create a Swish
+      </a>
+    </div>
+
+</header>
+
+<section>
+
+  <div class="container my-5">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Url</th>
+          <th scope="col">Score</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% @swish_score_board.each do |score_row| %>
+          <tr class="<%= leaderboard_rank_class(score_row[:rank]) %>">
+            <th scope="row"><%= score_row[:rank] %></th>
+            <td><%= score_row[:member] %></td>
+            <td><%= score_row[:score] %></td>
+
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

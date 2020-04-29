@@ -1,5 +1,33 @@
 class SwishReport < ApplicationRecord
-  has_one :swish
+  include LeaderboardFactory
+  belongs_to :swish
+  has_one :user, through: :swish
+
+  collection_leaderboard 'swish_score_board'
+
+  before_create :calculate_swish_score
+  after_create :set_swish_score_board
+
+  def calculate_swish_score
+    self.swish_score = (accessibility + performance + seo + best_practices + (600 - (first_contentful_paint + first_cpu_idle + first_meaningful_paint + estimated_input_latency + time_to_interactive + speed_index))).to_f.round(2)
+  end
+
+  def set_swish_score_board
+    if join_leaderboard.present? || SwishReport.swish_score_board.member_data_for(url)
+      board_data = SwishReport.swish_score_board.member_data_for(url) || to_h
+      board_data['host'] = board_data['host'] || URI(url).host
+      board_data['url'] = board_data['url'] || url
+      board_data['joined'] = board_data['joined'] || join_leaderboard || DateTime.now.to_s
+
+      highscore_check = lambda do |member, current_score, score, member_data, leaderboard_options|
+        return true if current_score.nil?
+        return true if score > current_score
+        false
+      end
+      SwishReport.swish_score_board.rank_member_if(highscore_check, url, swish_score, board_data)
+    end
+  end
+
 
   def map_data_to_fields(data)
     self.accessibility ||= data['Accessibility'].to_f
@@ -53,12 +81,20 @@ class SwishReport < ApplicationRecord
     ]
   end
 
+  def self.rank_all
+    SwishReport.all.each do |swish_report|
+      swish_report.calculate_swish_score
+      swish_report.set_swish_score_board
+      swish_report.save
+    end
+  end
+
   def self.describe(reports)
     reports_array = reports.map(&:to_a)
 
     df = Daru::DataFrame.new(reports_array);
     df = df.transpose
 
-    df.describe([:count, :mean,:median, :min, :max]).transpose.to_h
+    df.describe([:count, :mean, :median, :min, :max]).transpose.to_h
   end
 end

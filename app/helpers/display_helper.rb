@@ -26,13 +26,13 @@ module DisplayHelper
   end
 
   def group_class(new_value)
-      if new_value < 50
-        'text-fail'
-      elsif new_value < 90
-        'text-average'
-      else
-        'text-pass'
-      end
+    if new_value < 50
+      'text-fail'
+    elsif new_value < 90
+      'text-average'
+    else
+      'text-pass'
+    end
   end
 
   def metric_with_change(report, metric, reports, index, prefix: '', inverse: false, shoe_group_color: false)
@@ -52,6 +52,10 @@ module DisplayHelper
         last ? '' : "class='text-#{difference_class(new_value, old_value, inverse)}'>",
         last ? '' : " (#{percentage_difference(new_value, old_value)})</small>"
     ].join
+  end
+
+  def leaderboard_rank_class(rank)
+    rank <= 3 ? 'table-warning' : (rank <= 10 ? 'table-success' : '')
   end
 
 end

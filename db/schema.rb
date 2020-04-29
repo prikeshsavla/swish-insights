@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_24_041640) do
+ActiveRecord::Schema.define(version: 2020_04_29_025404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_041640) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "gist_id"
     t.string "url"
+    t.float "swish_score"
+    t.datetime "join_leaderboard"
     t.index ["swish_id"], name: "index_swish_reports_on_swish_id"
   end
 

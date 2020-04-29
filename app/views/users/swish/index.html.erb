@@ -9,7 +9,7 @@
 
         <thead class="bg-primary text-white ">
         <tr>
-          <th>ID</th>
+<!--          <th>ID</th>-->
           <th>URL</th>
           <th>Reports</th>
           <th>Created At</th>
@@ -18,12 +18,13 @@
         <tbody>
         <% @swishes.each do |swish| %>
           <tr>
+<!--            <td>-->
+              <%#= link_to "##{swish.id}", users_swish_url(swish), title: "Show Swish" %>
+              <%#= link_to "View", users_swish_url(swish), title: "Show Swish" %>
+<!--            </td>-->
             <td>
-              <%= link_to "##{swish.id}", users_swish_url(swish), title: "Show Swish" %>
-            </td>
-            <td>
-              <%= swish.url %>
-              <a href="<%= swish.url %>" target="_blank" title="Open Link"><i class='fas fa-external-link-alt'></i></a>
+              <%= link_to swish.url, users_swish_url(swish), title: "Show Swish" %>
+<!--              <a href="<%#= swish.url %>" target="_blank" title="Open Link"><i class='fas fa-external-link-alt'></i></a>-->
             </td>
             <td>
               <%= swish.swish_reports.count %>
