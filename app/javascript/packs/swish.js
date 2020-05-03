@@ -7,15 +7,26 @@
 
 import Vue from 'vue'
 import Typed from "typed.js/src/typed";
+import $ from 'jquery';
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     startVueForm()
-//
-// });
+require('imports-loader?define=>false,this=>window!datatables.net')(window, $)
+require('imports-loader?define=>false,this=>window!datatables.net-bs4')(window, $)
+
 document.addEventListener('turbolinks:load', () => {
     startVueForm();
+    if (!$('.dataTables_wrapper').length) {
+        $('.datatable').DataTable({
+            "filter": false,
+            "info": false,
+        });
 
-
+        $('.datatable-sm').DataTable({
+            "info": false,
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            "filter": false,
+            "order": [[0, "desc"]]
+        });
+    }
 });
 
 function startVueForm() {

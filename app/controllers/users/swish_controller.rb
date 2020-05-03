@@ -6,7 +6,7 @@ class Users::SwishController < Users::BaseController
   end
 
   def show
-    @swish_reports = @swish.swish_reports.reverse.group_by(&:url)
+    @swish_reports = @swish.swish_reports.order(created_at: :desc).group_by(&:url)
     @swish_reports_description = {}
     @swish_reports.each do |url, report|
       @swish_reports_description[url] = SwishReport.describe(report)

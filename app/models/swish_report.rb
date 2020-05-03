@@ -4,7 +4,7 @@ class SwishReport < ApplicationRecord
   has_one :user, through: :swish
 
   collection_leaderboard 'swish_score_board'
-
+  # SwishReport.swish_score_board
   before_create :calculate_swish_score
   after_create :set_swish_score_board
 
