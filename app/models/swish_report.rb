@@ -26,6 +26,7 @@ class SwishReport < ApplicationRecord
       end
       SwishReport.swish_score_board.rank_member_if(highscore_check, url, swish_score, board_data)
     end
+    swish.set_score_board
   end
 
 

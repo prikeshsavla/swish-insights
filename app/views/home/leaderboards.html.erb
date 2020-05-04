@@ -18,7 +18,7 @@
         <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Url</th>
+          <th scope="col">Website</th>
           <th scope="col">Score</th>
         </tr>
         </thead>
@@ -27,7 +27,7 @@
         <% @swish_score_board.each do |score_row| %>
           <tr class="<%= leaderboard_rank_class(score_row[:rank]) %>">
             <th scope="row"><%= score_row[:rank] %></th>
-            <td><%= score_row[:member] %></td>
+            <td><%= score_row[:member] %> |  <small><a href="https://<%= score_row[:member] %>" target="_blank" class="text-primary" title="Open Link"><i class='fas fa-external-link-alt'></i></a></small> </td>
             <td><%= score_row[:score] %></td>
 
           </tr>

@@ -10,17 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_29_025404) do
+ActiveRecord::Schema.define(version: 2020_05_04_034702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.string "value"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
 
   create_table "overseers", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -67,6 +60,7 @@ ActiveRecord::Schema.define(version: 2020_04_29_025404) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "sequential_id"
     t.index ["user_id"], name: "index_swishes_on_user_id"
   end
 

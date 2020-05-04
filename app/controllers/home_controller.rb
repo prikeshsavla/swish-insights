@@ -4,6 +4,6 @@ class HomeController < ApplicationController
   end
 
   def leaderboards
-    @swish_score_board = SwishReport.swish_score_board.top(10)
+    @swish_score_board =  Swish.score_board.top(10)
   end
 end
