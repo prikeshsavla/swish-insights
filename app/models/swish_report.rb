@@ -3,7 +3,7 @@ class SwishReport < ApplicationRecord
   belongs_to :swish
   has_one :user, through: :swish
 
-  collection_leaderboard 'swish_score_board'
+  # collection_leaderboard 'swish_score_board'
   # SwishReport.swish_score_board
   before_create :calculate_swish_score
   after_create :set_swish_score_board
@@ -13,19 +13,19 @@ class SwishReport < ApplicationRecord
   end
 
   def set_swish_score_board
-    if join_leaderboard.present? || SwishReport.swish_score_board.member_data_for(url)
-      board_data = SwishReport.swish_score_board.member_data_for(url) || to_h
-      board_data['host'] = board_data['host'] || URI(url).host
-      board_data['url'] = board_data['url'] || url
-      board_data['joined'] = board_data['joined'] || join_leaderboard || DateTime.now.to_s
-
-      highscore_check = lambda do |member, current_score, score, member_data, leaderboard_options|
-        return true if current_score.nil?
-        return true if score > current_score
-        false
-      end
-      SwishReport.swish_score_board.rank_member_if(highscore_check, url, swish_score, board_data)
-    end
+    # if join_leaderboard.present? || SwishReport.swish_score_board.member_data_for(url)
+    #   board_data = SwishReport.swish_score_board.member_data_for(url) || to_h
+    #   board_data['host'] = board_data['host'] || URI(url).host
+    #   board_data['url'] = board_data['url'] || url
+    #   board_data['joined'] = board_data['joined'] || join_leaderboard || DateTime.now.to_s
+    #
+    #   highscore_check = lambda do |member, current_score, score, member_data, leaderboard_options|
+    #     return true if current_score.nil?
+    #     return true if score > current_score
+    #     false
+    #   end
+    #   SwishReport.swish_score_board.rank_member_if(highscore_check, url, swish_score, board_data)
+    # end
     swish.set_score_board
   end
 

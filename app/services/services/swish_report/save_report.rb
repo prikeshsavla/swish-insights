@@ -5,7 +5,7 @@ class Services::SwishReport::SaveReport
     host = original_url.host.gsub('www.', '')
     original_url.host = host
     original_url.scheme = 'https'
-    swish = Swish.find_or_initialize_by(url: original_url.host)
+    swish = Swish.find_or_initialize_by(url: original_url.host, user: current_user)
 
     if swish.new_record?
       swish.user = current_user
@@ -13,7 +13,7 @@ class Services::SwishReport::SaveReport
     end
     report = swish.swish_reports.build
     data = params[:swish][:report]
-    filename = original_url.to_s + '.lighthouse.report.json'
+    filename = host.to_s + '.lighthouse.report.json'
     gist = Gist.gist data, access_token: ENV['GITHUB_TOKEN'], filename: filename
     report.url = original_url.to_s
     report.gist_id = gist['id']

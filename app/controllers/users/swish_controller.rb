@@ -19,7 +19,6 @@ class Users::SwishController < Users::BaseController
   end
 
   private
-
   def set_swish
     @swish = Swish.find(params[:id])
   end

@@ -14,7 +14,7 @@
 <%= render 'shared/layouts/components/navigation' %>
 <%= yield %>
 <% flash.each do |message_type, message| %>
-  <div class="alert alert-info alert-dismissible fade show" role="alert">
+  <div class="alert alert-default bg-light alert-dismissible fade show" role="alert">
     <%= message %>
     <button class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
