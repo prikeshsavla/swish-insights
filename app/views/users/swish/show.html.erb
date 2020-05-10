@@ -1,12 +1,13 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2"> Swish "<%= @swish.url %>"
     <small><a href="<%= @swish.url %>" target="_blank" title="Open Link"><i class='fas fa-external-link-alt'></i></a></small>
-
-
   </h1>
   <div class="btn-group">
     <a href="https://developers.google.com/web/tools/lighthouse/v3/scoring" class="btn btn-default btn-sm" data-toggle="tooltip" title="0 to 49 (not good): Red; 50 to 89 (average): Orange; 90 to 100 (good): Green" target="_blank">
       <i class="fas fa-info-circle"></i> Scoring Guide
+    </a>
+    <a class="btn btn-light btn-sm" href="?toggle=true">
+      <%= @swish.allow_pwa ? 'Hide' : 'Show' %> PWA
     </a>
     <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target=".collapse-stats" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Show
       Stats
@@ -16,8 +17,6 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-
-
     <div id="accordion">
       <% @swish_reports.each_with_index do |(url, swish_reports), index| %>
         <div class="card">
@@ -32,7 +31,7 @@
             <% if index == 0 %>show
             <% end %>" aria-labelledby="heading-<%= index + 1 %>" data-parent="#accordion">
             <div class="">
-              <%= render partial: 'swish_report_table', locals: {swish_reports: swish_reports, swish_reports_description: @swish_reports_description[url]} %>
+              <%= render partial: 'swish_report_table', locals: {swish: @swish, swish_reports: swish_reports, swish_reports_description: @swish_reports_description[url]} %>
             </div>
           </div>
         </div>

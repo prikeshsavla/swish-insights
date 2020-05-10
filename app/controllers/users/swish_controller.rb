@@ -6,6 +6,11 @@ class Users::SwishController < Users::BaseController
   end
 
   def show
+    if params['toggle'].present?
+      @swish.allow_pwa = !@swish.allow_pwa
+      @swish.save
+    end
+
     @swish_reports = @swish.swish_reports.order(created_at: :desc).group_by(&:url)
     @swish_reports_description = {}
     @swish_reports.each do |url, report|
@@ -19,6 +24,7 @@ class Users::SwishController < Users::BaseController
   end
 
   private
+
   def set_swish
     @swish = Swish.find(params[:id])
   end

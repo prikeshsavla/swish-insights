@@ -6,7 +6,9 @@
       <th> Created At</th>
       <th>Accessibility</th>
       <th>Performance</th>
-      <th>PWA</th>
+      <% if swish.allow_pwa %>
+        <th>PWA</th>
+      <% end %>
       <th>SEO</th>
       <th>Best-Practices</th>
       <th>First Contentful Paint</th>
@@ -23,7 +25,9 @@
         <th style="width: 6rem" data-order="<%= swish_report.created_at.to_i %>"><%= swish_report.created_at.to_formatted_s(:short) %></th>
         <td>  <%== metric_with_change(swish_report, :accessibility, swish_reports, index, shoe_group_color: true) %>     </td>
         <td>  <%== metric_with_change(swish_report, :performance, swish_reports, index, shoe_group_color: true) %>  </td>
-        <td>  <%== metric_with_change(swish_report, :pwa, swish_reports, index, shoe_group_color: true) %>  </td>
+        <% if swish.allow_pwa %>
+          <td>  <%== metric_with_change(swish_report, :pwa, swish_reports, index, shoe_group_color: true) %>  </td>
+        <% end %>
         <td>  <%== metric_with_change(swish_report, :seo, swish_reports, index, shoe_group_color: true) %>  </td>
         <td>  <%== metric_with_change(swish_report, :best_practices, swish_reports, index, shoe_group_color: true) %>  </td>
         <td>  <%== metric_with_change(swish_report, :first_contentful_paint, swish_reports, index) %>
@@ -56,7 +60,9 @@
         <th> Statistic</th>
         <th>Accessibility</th>
         <th>Performance</th>
-        <th>PWA</th>
+        <% if swish.allow_pwa %>
+          <th>PWA</th>
+        <% end %>
         <th>SEO</th>
         <th>Best-Practices</th>
         <th>First Contentful Paint</th>
@@ -74,8 +80,13 @@
           <th>
             <%= key %>
           </th>
-          <% value.each do |metric| %>
-            <td><%= metric.round(2) %></td>
+          <% value.each_with_index do |metric, index| %>
+            <% if index != 3 %>
+              <td><%= metric.round(2) %></td>
+            <% elsif swish.allow_pwa %>
+              <td><%= metric.round(2) %></td>
+            <% end %>
+
           <% end %>
         </tr>
       <% end %>
