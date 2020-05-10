@@ -19,7 +19,7 @@ class Users::SwishController < Users::BaseController
   end
 
   def create
-    ::Services::SwishReport::SaveReport.new.call(params, current_user)
+    ::Services::SwishReport::SaveReport.new.call(params[:swish], current_user.id)
     render json: {"value": 2}, status: 200
   end
 

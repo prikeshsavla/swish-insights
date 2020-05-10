@@ -42,6 +42,8 @@ gem "pundit"
 gem 'sequenced'
 gem 'dotenv-rails', groups: [:development, :test]
 
+gem 'sidekiq'
+gem 'httparty'
 
 @leaderboard
 gem 'leaderboard_factory'
