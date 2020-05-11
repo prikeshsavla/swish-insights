@@ -16,7 +16,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :swish
+      resources :swish do
+        collection do
+          get 'generate'
+        end
+      end
     end
   end
 

@@ -6,6 +6,12 @@ class User < ApplicationRecord
 
   has_many :swishes, dependent: :nullify
 
+  before_create :generate_api_key
+
+  def generate_api_key
+    self.api_key = SecureRandom.uuid
+  end
+
   def admin?
     self.email == 'prikesh@rirev.com'
   end

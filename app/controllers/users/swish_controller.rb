@@ -7,7 +7,11 @@ class Users::SwishController < Users::BaseController
 
   def show
     if params['toggle'].present?
-      @swish.allow_pwa = !@swish.allow_pwa
+      if params['toggle'] == 'true'
+        @swish.allow_pwa = true
+      else
+        @swish.allow_pwa = false
+      end
       @swish.save
     end
 

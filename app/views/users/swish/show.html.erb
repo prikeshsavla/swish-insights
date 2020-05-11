@@ -3,15 +3,25 @@
     <small><a href="https://<%= @swish.url %>" target="_blank" title="Open Link"><i class='fas fa-external-link-alt'></i></a></small>
   </h1>
   <div class="btn-group">
-    <a href="https://developers.google.com/web/tools/lighthouse/v3/scoring" class="btn btn-default btn-sm" data-toggle="tooltip" title="0 to 49 (not good): Red; 50 to 89 (average): Orange; 90 to 100 (good): Green" target="_blank">
-      <i class="fas fa-info-circle"></i> Scoring Guide
-    </a>
-    <a class="btn btn-light btn-sm" href="?toggle=true">
+    <a class="btn btn-light btn-sm" href="?toggle=<%= @swish.allow_pwa ? 'false' : 'true' %>">
       <%= @swish.allow_pwa ? 'Hide' : 'Show' %> PWA
     </a>
     <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target=".collapse-stats" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Show
       Stats
     </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col text-right">
+    <div class="btn-group mb-3">
+      <a href="https://developers.google.com/web/tools/lighthouse/v3/scoring" class="btn btn-default btn-sm" data-toggle="tooltip" title="0 to 49 (not good): Red; 50 to 89 (average): Orange; 90 to 100 (good): Green" target="_blank">
+        <i class="fas fa-info-circle"></i> Lighthouse Scoring Guide
+      </a>
+      <button class="btn btn-light btn-sm " data-copy="#webhook" data-toggle="tooltip" title="Copy to Clipboard">
+        <i class="fas fa-copy"></i> Copy Webhook URL
+        <input id="webhook" class="d-none" value="http://swish.prikeshsavla.com/api/v1/swish/generate?key=<%= @swish.user.api_key %>&host=<%= @swish.url %>">
+      </button>
+    </div>
   </div>
 </div>
 <div class="row">
