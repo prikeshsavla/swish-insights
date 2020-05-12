@@ -15,6 +15,7 @@ class Users::SwishController < Users::BaseController
       @swish.save
     end
 
+
     @swish_reports = @swish.swish_reports.order(created_at: :desc).group_by(&:url)
     @swish_reports_description = {}
     @swish_reports.each do |url, report|
@@ -23,8 +24,8 @@ class Users::SwishController < Users::BaseController
   end
 
   def create
-    ::Services::SwishReport::SaveReport.new.call(params[:swish], current_user.id)
-    render json: {"value": 2}, status: 200
+    report = ::Services::SwishReport::SaveReport.new.call(params[:swish], current_user.id)
+    render json: {"value": report.swish_score}, status: 200
   end
 
   private

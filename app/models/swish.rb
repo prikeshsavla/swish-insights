@@ -11,6 +11,10 @@ class Swish < ApplicationRecord
     self.allow_pwa = user.allow_pwa
   end
 
+  def activity
+    self.swish_reports.order(created_at: :asc).group_by { |r| r.created_at.beginning_of_day.to_i }.map { |r, d| {"#{r}": d.count} }.reduce(:merge)
+  end
+
   def set_score_board
     top_swish_reports = SwishReport.where(swish: Swish.where(url: url)).order(swish_score: :desc).group_by(&:url).map { |_k, v| v.first }
     link_count = top_swish_reports.count
