@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]
 
   has_many :swishes, dependent: :nullify
+  has_many :swish_reports, through: :swishes, dependent: :nullify
 
   before_create :generate_api_key
 

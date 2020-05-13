@@ -24,7 +24,10 @@ Rails.application.routes.draw do
     end
   end
 
+
   namespace :users do
     resources :swish
+    resources :dashboard, only: [:index]
+
   end
 end

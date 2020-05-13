@@ -4,6 +4,8 @@
   <title>Swish Insights</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <link href="https://fonts.googleapis.com/css?family=Catamaran:700|Lato&display=swap" rel="stylesheet">
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -20,6 +22,18 @@
       <strong>Swish</strong>
     </a>
     <ul class="navbar-nav px-3">
+      <li class="nav-item">
+              <a class="nav-link" href="<%= users_dashboard_index_url %>">
+                <i class="fa fa-chart-line"></i>
+                Dashboard
+              </a>
+            </li>
+      <li class="nav-item">
+              <a class="nav-link" href="<%= users_swish_index_url %>">
+                <i class="fa fa-list-ul"></i>
+                All Swishes
+              </a>
+            </li>
       <li class="nav-item">
 
         <a href="<%= new_users_swish_url %>" class="nav-link">
@@ -39,38 +53,10 @@
       </li>
     </ul>
   </nav>
-  <div class="container-fluid">
-    <div class="row">
-      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-        <div class="sidebar-sticky">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <i class="fa fa-chart-line"></i>
-                Dashboard
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<%= users_swish_index_url %>">
-                <i class="fa fa-list-ul"></i>
-                All Swishes
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<%= new_users_swish_url %>" class="nav-link">
-                <i class="fas fa-plus-square"></i>
-                Create a New Swish
-              </a>
-            </li>
-
-          </ul>
-
-
-        </div>
-      </nav>
+  <div class="container">
 <% end %>
 <main role="main" class="
-  <% if current_user.present? %> col-md-9 ml-sm-auto col-lg-10
+  <% if current_user.present? %> col-md-12
   <% end %> px-4">
   <%= yield %>
   <% flash.each do |message_type, message| %>
@@ -84,7 +70,6 @@
 
 </main>
 <% if current_user.present? %>
-  </div>
   </div>
 <% end %>
 

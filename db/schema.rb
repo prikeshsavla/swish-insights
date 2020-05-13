@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_10_042902) do
+ActiveRecord::Schema.define(version: 2020_05_13_050615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2020_05_10_042902) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "sequential_id"
     t.boolean "allow_pwa", default: true
+    t.float "score"
     t.index ["user_id"], name: "index_swishes_on_user_id"
   end
 

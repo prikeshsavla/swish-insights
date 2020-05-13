@@ -3,6 +3,7 @@ class SwishReport < ApplicationRecord
   belongs_to :swish
   has_one :user, through: :swish
 
+  scope :from_this_month, lambda { where("swish_reports.created_at > ? AND swish_reports.created_at < ?", Time.now.beginning_of_month, Time.now.end_of_month) }
   # collection_leaderboard 'swish_score_board'
   # SwishReport.swish_score_board
   before_create :calculate_swish_score

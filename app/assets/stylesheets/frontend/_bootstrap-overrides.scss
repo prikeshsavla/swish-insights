@@ -2,6 +2,10 @@
   background-color: $primary !important;
 }
 
+.bg-secondary {
+  background-color: $secondary !important;
+}
+
 .text-primary {
   color: $primary !important;
 }
@@ -9,12 +13,14 @@
 .btn-primary {
   background-color: $primary !important;
   border-color: $primary !important;
+
   &:active,
   &:focus,
   &:hover {
     background-color: darken($primary, 10%) !important;
     border-color: darken($primary, 10%) !important;
   }
+
   &:focus {
     box-shadow: 0 0 0 0.2rem fade-out($primary, 0.5);
   }
@@ -23,12 +29,14 @@
 .btn-secondary {
   background-color: $secondary;
   border-color: $secondary;
+
   &:active,
   &:focus,
   &:hover {
     background-color: darken($secondary, 10%) !important;
     border-color: darken($secondary, 10%) !important;
   }
+
   &:focus {
     box-shadow: 0 0 0 0.2rem fade-out($secondary, 0.5);
   }
