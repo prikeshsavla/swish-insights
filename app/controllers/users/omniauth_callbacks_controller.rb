@@ -4,15 +4,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def google_oauth2
     auth = request.env["omniauth.auth"]
-    user = User.where(provider: auth["provider"], uid: auth["uid"])
-               .first_or_initialize(email: auth["info"]["email"])
+    user = User.where(provider: auth["provider"], uid: auth["uid"]).first_or_initialize(email: auth["info"]["email"])
 
     is_new_user = user.new_record?
 
-    user.name ||= auth["info"]["name"]
-    user.password = Devise.friendly_token[0, 20]
+    if is_new_user
+      user.name ||= auth["info"]["name"]
+      user.password = Devise.friendly_token[0, 20]
 
-    user.save!
+      user.save!
+    end
 
     user.remember_me = true
     sign_in(:user, user)
