@@ -1,18 +1,22 @@
 <header class="masthead text-center text-white p-5">
 
-    <div class="container">
-      <h1 class="masthead-heading mb-0">Leaderboards</h1>
-      <h2 class="masthead-subheading mb-0">Website performance with Google Lighthouse v3</h2>
-      <a href="<%= new_users_swish_url %>" class="btn btn-primary btn-xl rounded-pill mt-5">
-        Create a Swish
-      </a>
-    </div>
+  <div class="container">
+    <h1 class="masthead-heading mb-0">Leaderboards</h1>
+    <h2 class="masthead-subheading mb-0">Website performance with Google Lighthouse v3</h2>
+    <a href="<%= new_users_swish_url %>" class="btn btn-primary btn-xl rounded-pill mt-5">
+      Create a Swish
+    </a>
+  </div>
 
 </header>
 
 <section>
 
   <div class="container my-5">
+    <p class="text-right">
+      <%= link_to 'Score Guide', leaderboards_scoring_url, class: 'btn btn-sm btn-outline-primary' %>
+
+    </p>
     <div class="table-responsive">
       <table class="table table-hover table-bordered">
         <thead>
@@ -27,7 +31,9 @@
         <% @swish_score_board.each do |score_row| %>
           <tr class="<%= leaderboard_rank_class(score_row[:rank]) %>">
             <th scope="row"><%= score_row[:rank] %></th>
-            <td><%= score_row[:member] %> |  <small><a href="https://<%= score_row[:member] %>" target="_blank" class="text-primary" title="Open Link"><i class='fas fa-external-link-alt'></i></a></small> </td>
+            <td><%= score_row[:member] %> |
+              <small><a href="https://<%= score_row[:member] %>" target="_blank" class="text-primary" title="Open Link"><i class='fas fa-external-link-alt'></i></a></small>
+            </td>
             <td><%= score_row[:score] %></td>
 
           </tr>

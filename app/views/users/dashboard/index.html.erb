@@ -46,58 +46,59 @@
   </div>
 
   <div class="col-12 mt-5">
-    <h4>Last 5 Reports Generated <small class="float-right"><%= link_to 'View All', users_swish_index_url, title: "Show Swish" %></small></h4>
-
-    <table class="table table-sm ">
-      <thead>
-      <tr>
-        <th> Created At</th>
-        <th>URL</th>
-        <th>Accessibility</th>
-        <th>Performance</th>
-        <% if current_user.allow_pwa %>
-          <th>PWA</th>
-        <% end %>
-        <th>SEO</th>
-        <th>Best-Practices</th>
-        <th>First Contentful Paint</th>
-        <th>First CPU Idle</th>
-        <th>First Meaningful Paint</th>
-        <th>Estimated Input Latency</th>
-        <th>Time To Interactive</th>
-        <th>Speed Index</th>
-        <th>View Report</th>
-      </tr>
-      </thead>
-      <% @data.swish_reports.each_with_index do |swish_report, index| %>
+    <h4>Last 5 Reports Generated
+      <small class="float-right"><%= link_to 'View All', users_swish_index_url, title: "Show Swish" %></small></h4>
+    <div class="table-responsive">
+      <table class="table table-sm ">
+        <thead>
         <tr>
-          <th style="width: 6rem" data-order="<%= swish_report.created_at.to_i %>"><%= swish_report.created_at.to_formatted_s(:short) %></th>
-          <td> <%= link_to swish_report.url, users_swish_url(swish_report.swish), title: "Show Swish" %> </td>
-          <td>  <%== diplay_with_group_color(swish_report.accessibility) %> </td>
-          <td>  <%== diplay_with_group_color(swish_report.performance) %> </td>
+          <th> Created At</th>
+          <th>URL</th>
+          <th>Accessibility</th>
+          <th>Performance</th>
           <% if current_user.allow_pwa %>
-            <td>  <%== diplay_with_group_color(swish_report.pwa) %> </td>
+            <th>PWA</th>
           <% end %>
-          <td>  <%== diplay_with_group_color(swish_report.seo) %> </td>
-          <td>  <%== diplay_with_group_color(swish_report.best_practices) %> </td>
-          <td>  <%== diplay_with_group_color(swish_report.first_contentful_paint) %> </td>
-
-          <td>  <%== diplay_with_group_color(swish_report.first_cpu_idle) %> </td>
-          <td>  <%== diplay_with_group_color(swish_report.first_meaningful_paint) %> </td>
-          <td>  <%== diplay_with_group_color(swish_report.estimated_input_latency) %> </td>
-          <td>  <%== diplay_with_group_color(swish_report.time_to_interactive) %> </td>
-          <td>  <%== diplay_with_group_color(swish_report.speed_index) %> </td>
-          <td>
-            <a href="https://googlechrome.github.io/lighthouse/viewer/?gist=<%= swish_report.gist_id %>" target="_blank">View</a>
-          </td>
+          <th>SEO</th>
+          <th>Best-Practices</th>
+          <th>First Contentful Paint</th>
+          <th>First CPU Idle</th>
+          <th>First Meaningful Paint</th>
+          <th>Estimated Input Latency</th>
+          <th>Time To Interactive</th>
+          <th>Speed Index</th>
+          <th>View Report</th>
         </tr>
-      <% end %>
-    </table>
+        </thead>
+        <% @data.swish_reports.each_with_index do |swish_report, index| %>
+          <tr>
+            <th style="width: 6rem" data-order="<%= swish_report.created_at.to_i %>"><%= swish_report.created_at.to_formatted_s(:short) %></th>
+            <td> <%= link_to swish_report.url, users_swish_url(swish_report.swish), title: "Show Swish" %> </td>
+            <td>  <%== diplay_with_group_color(swish_report.accessibility) %> </td>
+            <td>  <%== diplay_with_group_color(swish_report.performance) %> </td>
+            <% if current_user.allow_pwa %>
+              <td>  <%== diplay_with_group_color(swish_report.pwa) %> </td>
+            <% end %>
+            <td>  <%== diplay_with_group_color(swish_report.seo) %> </td>
+            <td>  <%== diplay_with_group_color(swish_report.best_practices) %> </td>
+            <td>  <%== diplay_with_group_color(swish_report.first_contentful_paint) %> </td>
 
+            <td>  <%== diplay_with_group_color(swish_report.first_cpu_idle) %> </td>
+            <td>  <%== diplay_with_group_color(swish_report.first_meaningful_paint) %> </td>
+            <td>  <%== diplay_with_group_color(swish_report.estimated_input_latency) %> </td>
+            <td>  <%== diplay_with_group_color(swish_report.time_to_interactive) %> </td>
+            <td>  <%== diplay_with_group_color(swish_report.speed_index) %> </td>
+            <td>
+              <a href="https://googlechrome.github.io/lighthouse/viewer/?gist=<%= swish_report.gist_id %>" target="_blank">View</a>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
 
   <div class="col-12 pb-5 mt-5">
-    <h4 class="mt-3">Activity Map of All Sites  </h4>
+    <h4 class="mt-3">Activity Map of All Sites </h4>
     <div style="max-width: 100%; overflow-x: scroll">
       <div id="activity-heatmap" data-chart="heatmap" data-start-at="<%= DateTime.now.beginning_of_year.to_i * 1000 %>" data-end-at="<%= DateTime.now.end_of_year.end_of_day.to_i * 1000 %>" data-datapoints='<%= @data.activity.to_json %>'></div>
     </div>

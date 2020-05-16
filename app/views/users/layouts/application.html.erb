@@ -17,23 +17,23 @@
 <body>
 <% if current_user.present? %>
   <nav class="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/users/dashboard">
       <img src="/images/swish-inverse.png" alt="" width="30" height="30">
       <strong>Swish</strong>
     </a>
     <ul class="navbar-nav px-3">
       <li class="nav-item">
-              <a class="nav-link" href="<%= users_dashboard_index_url %>">
-                <i class="fa fa-chart-line"></i>
-                Dashboard
-              </a>
-            </li>
+        <a class="nav-link" href="<%= users_dashboard_index_url %>">
+          <i class="fa fa-chart-line"></i>
+          Dashboard
+        </a>
+      </li>
       <li class="nav-item">
-              <a class="nav-link" href="<%= users_swish_index_url %>">
-                <i class="fa fa-list-ul"></i>
-                All Swishes
-              </a>
-            </li>
+        <a class="nav-link" href="<%= users_swish_index_url %>">
+          <i class="fa fa-list-ul"></i>
+          All Swishes
+        </a>
+      </li>
       <li class="nav-item">
 
         <a href="<%= new_users_swish_url %>" class="nav-link">

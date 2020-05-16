@@ -4,6 +4,10 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   get '/index', to: 'home#index'
   get '/leaderboards', to: 'home#leaderboards'
+  get '/privacy-policy', to: 'home#privacy'
+  get '/terms-and-conditions', to: 'home#terms'
+  get '/leaderboards-scoring', to: 'home#leaderboard_scoring'
+
   devise_for :overseers
   # devise_for :users
   devise_for :users, controllers: {registrations: 'users/registrations', sessions: 'users/sessions', passwords: 'users/passwords', omniauth_callbacks: "users/omniauth_callbacks"}, path: 'users'

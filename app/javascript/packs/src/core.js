@@ -33,7 +33,7 @@ var core = {
             /* Copy the text inside the text field */
             document.execCommand("copy");
             /* Alert the copied text */
-            alert("Copied: " + copyText.value);
+            //alert("Copied: " + copyText.value);
         });
     },
     initDataTables() {
