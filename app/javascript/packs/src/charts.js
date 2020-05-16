@@ -22,7 +22,6 @@ const charts = {
                     let chart = new Chart('#' + id, {
                         type: 'heatmap',
                         data: data,
-                        discreteDomains: 0,
                         colors: ['#FFE7F3', '#FF70B6', '#FF007D', '#B40058', '#8A0044'],
                     });
                 }

@@ -35,13 +35,13 @@ module DisplayHelper
     end
   end
 
-  def metric_with_change(report, metric, reports, index, prefix: '', inverse: false, shoe_group_color: false)
+  def metric_with_change(report, metric, reports, index, prefix: '', inverse: false, show_group_color: false)
     last = index == (reports.length - 1)
     new_value = report.send(metric)
     old_value = last ? new_value : reports[index + 1].send(metric)
     [
         "<span class='",
-        if shoe_group_color
+        if show_group_color
           group_class(new_value)
         end,
         "'>",
@@ -52,6 +52,14 @@ module DisplayHelper
         last ? '' : "class='text-#{difference_class(new_value, old_value, inverse)}'>",
         last ? '' : " (#{percentage_difference(new_value, old_value)})</small>"
     ].join
+  end
+
+  def diplay_with_group_color(value)
+    ["<span class='",
+     group_class(value),
+     "'>",
+     value,
+     '</span>'].join
   end
 
   def leaderboard_rank_class(rank)
