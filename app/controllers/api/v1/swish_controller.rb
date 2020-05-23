@@ -9,14 +9,10 @@ class Api::V1::SwishController < ApplicationController
     if host.nil?
       raise MissingParameters('You need to send a host to start the request')
     end
-    uri = URI(host)
-    if uri.kind_of?(URI::HTTP) or uri.kind_of?(URI::HTTPS)
-      host = uri.host
-    elsif uri.kind_of?(URI::Generic)
-      host = uri.to_s
-    end
-    if SwishJob.perform_later(host, user_id)
-      render json: {}, status: :ok
+
+    job = SwishJob.perform_later(host, user_id)
+    if job
+      render json: {id: job.job_id, host: host}, status: :ok
     end
   end
 

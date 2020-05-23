@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Swish Insights</title>
   <%= csrf_meta_tags %>
@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link href="https://fonts.googleapis.com/css?family=Catamaran:700|Lato&display=swap" rel="stylesheet">
-  <%= stylesheet_link_tag 'frontend', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'frontend', 'data-turbolinks-track': 'reload' %>
   <script src="https://kit.fontawesome.com/9f52a38b4d.js" crossorigin="anonymous"></script>
 </head>
@@ -16,7 +16,7 @@
 <%= render 'shared/layouts/components/navigation' %>
 <%= yield %>
 <% flash.each do |message_type, message| %>
-  <div class="alert alert-default bg-light alert-dismissible fade show" role="alert">
+  <div class="alert alert-light alert-dismissible fade show" role="alert">
     <%= message %>
     <button class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>

@@ -1,8 +1,9 @@
 // Core variables and mixins
+@import 'variables.scss';
 /* import the necessary Bootstrap files */
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
-@import 'variables.scss';
+
 @import 'components/mixins';
 /* finally, import Bootstrap to set the changes! */
 @import 'bootstrap/scss/bootstrap';

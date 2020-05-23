@@ -12,13 +12,4 @@
  *
  */
 @import "datatables.net-bs4/css/dataTables.bootstrap4.min";
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins";
-@import "frontend/variables";
-// Bootstrap and its default variables
-@import "bootstrap/scss/bootstrap";
-
-@import "frontend/bootstrap-overrides";
-
-@import "admin/dashboard";
+@import "frontend/master";

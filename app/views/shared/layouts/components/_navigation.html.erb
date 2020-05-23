@@ -3,6 +3,7 @@
   <div class="container">
     <a class="navbar-brand" href="/">
       <img src="images/swish-inverse.png" alt="">
+      <span class="sr-only">Swish</span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,26 +11,51 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="/leaderboards">Leaderboards</a>
-          </li>
+          <a class="nav-link" href="/">Home</a>
+        </li>
         <% if current_user.present? %>
           <li class="nav-item">
-            <a class="nav-link" href="/users/edit">Edit Profile</a>
+            <a class="nav-link" href="<%= users_dashboard_index_url %>">
+
+              Dashboard
+            </a>
+          </li>
+
+          <li class="nav-item">
+
+            <a href="<%= new_users_swish_url %>" class="nav-link">
+
+              New Swish
+            </a>
+
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/swish">My Swishes</a>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link" %>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/sign_up">Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/sign_in">Log In</a>
+            <a class="nav-link" href="<%= users_swish_index_url %>">
+
+              All Swishes
+            </a>
           </li>
         <% end %>
+        <li class="nav-item">
+          <a class="nav-link" href="/leaderboards">Leaderboards</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Profile
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <% if current_user.present? %>
+              <a class="dropdown-item" href="#"><%= current_user.display_name %></a>
+              <a class="dropdown-item" href="/users/edit">Edit Profile</a>
+              <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+            <% else %>
+              <a class="dropdown-item" href="/users/sign_up">Sign Up</a>
+              <a class="dropdown-item" href="/users/sign_in">Log In</a>
+            <% end %>
+          </div>
+        </li>
+
+
       </ul>
     </div>
   </div>

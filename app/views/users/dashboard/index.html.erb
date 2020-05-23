@@ -5,7 +5,7 @@
   <div class="col-xl-3 col-md-6">
     <div class="card bg-primary text-white mb-4">
       <div class="card-body"><h2><%= @data.total_swishes %> </h2>
-        <span>+ <%= @data.total_swishes_this_month %> (This Month)</span></div>
+        <span> <%= @data.total_swishes_this_month %> (This Month)</span></div>
       <div class="card-footer d-flex align-items-center justify-content-between">
         <span class=" text-white ">Websites</span>
       </div>
@@ -14,40 +14,46 @@
   <div class="col-xl-3 col-md-6">
     <div class="card bg-secondary text-white mb-4">
       <div class="card-body"><h2><%= @data.total_swish_reports %> </h2>
-        <span>+ <%= @data.total_swish_reports_this_month %> (This Month)</span></div>
+        <span> <%= @data.total_swish_reports_this_month %> (This Month)</span></div>
       <div class="card-footer d-flex align-items-center justify-content-between">
         <span class=" text-white ">Reports Generated</span>
 
       </div>
     </div>
   </div>
-  <div class="col-xl-3 col-md-6">
-    <div class="card bg-success text-white mb-4">
-      <div class="card-body"><h2><%= @data.top_score_swish.score %> </h2>
-        <%= link_to "#{@data.top_score_swish.url}", users_swish_url(@data.top_score_swish), title: "Show Swish", class: "text-white" %>
+  <% if @data.top_score_swish.present? %>
+    <div class="col-xl-3 col-md-6">
+      <div class="card bg-success text-white mb-4">
+        <div class="card-body"><h2><%= @data.top_score_swish.score %> </h2>
+          <%= link_to "#{@data.top_score_swish.url}", users_swish_url(@data.top_score_swish), title: "Show Swish", class: "text-white" %>
 
-      </div>
-      <div class="card-footer d-flex align-items-center justify-content-between">
-        <span class=" text-white ">Top Score</span>
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-3 col-md-6">
-    <div class="card bg-info text-white mb-4">
-      <div class="card-body"><h2><%= @data.lowest_score_swish.score %> </h2>
-        <%= link_to "#{@data.lowest_score_swish.url}", users_swish_url(@data.lowest_score_swish), title: "Show Swish", class: "text-white" %>
-
-      </div>
-      <div class="card-footer d-flex align-items-center justify-content-between">
-        <span class=" text-white ">Lowest Score</span>
-
+        </div>
+        <div class="card-footer d-flex align-items-center justify-content-between">
+          <span class=" text-white ">Top Score</span>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
+  <% if @data.lowest_score_swish.present? %>
+    <div class="col-xl-3 col-md-6">
+      <div class="card bg-info text-white mb-4">
+        <div class="card-body"><h2><%= @data.lowest_score_swish.score %> </h2>
+          <%= link_to "#{@data.lowest_score_swish.url}", users_swish_url(@data.lowest_score_swish), title: "Show Swish", class: "text-white" %>
 
+        </div>
+        <div class="card-footer d-flex align-items-center justify-content-between">
+          <span class=" text-white ">Lowest Score</span>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
   <div class="col-12 mt-5">
-    <h4>Last 5 Reports Generated
-      <small class="float-right"><%= link_to 'View All', users_swish_index_url, title: "Show Swish" %></small></h4>
+    <%= link_to 'View All', users_swish_index_url, title: "Show Swish", class: 'small float-right badge badge-primary mt-2' %>
+    <h4 class="w-50 ">Last 5 Reports Generated
+
+    </h4>
+
     <div class="table-responsive">
       <table class="table table-sm ">
         <thead>
@@ -73,7 +79,7 @@
         <% @data.swish_reports.each_with_index do |swish_report, index| %>
           <tr>
             <th style="width: 6rem" data-order="<%= swish_report.created_at.to_i %>"><%= swish_report.created_at.to_formatted_s(:short) %></th>
-            <td> <%= link_to swish_report.url, users_swish_url(swish_report.swish), title: "Show Swish" %> </td>
+            <td> <%= link_to URI.parse(swish_report.url).host, users_swish_url(swish_report.swish), title: "Show Swish" %> </td>
             <td>  <%== diplay_with_group_color(swish_report.accessibility) %> </td>
             <td>  <%== diplay_with_group_color(swish_report.performance) %> </td>
             <% if current_user.allow_pwa %>
@@ -81,13 +87,13 @@
             <% end %>
             <td>  <%== diplay_with_group_color(swish_report.seo) %> </td>
             <td>  <%== diplay_with_group_color(swish_report.best_practices) %> </td>
-            <td>  <%== diplay_with_group_color(swish_report.first_contentful_paint) %> </td>
+            <td>  <%== swish_report.first_contentful_paint %> </td>
 
-            <td>  <%== diplay_with_group_color(swish_report.first_cpu_idle) %> </td>
-            <td>  <%== diplay_with_group_color(swish_report.first_meaningful_paint) %> </td>
-            <td>  <%== diplay_with_group_color(swish_report.estimated_input_latency) %> </td>
-            <td>  <%== diplay_with_group_color(swish_report.time_to_interactive) %> </td>
-            <td>  <%== diplay_with_group_color(swish_report.speed_index) %> </td>
+            <td>  <%== swish_report.first_cpu_idle %> </td>
+            <td>  <%== swish_report.first_meaningful_paint %> </td>
+            <td>  <%== swish_report.estimated_input_latency %> </td>
+            <td>  <%== swish_report.time_to_interactive %> </td>
+            <td>  <%== swish_report.speed_index %> </td>
             <td>
               <a href="https://googlechrome.github.io/lighthouse/viewer/?gist=<%= swish_report.gist_id %>" target="_blank">View</a>
             </td>

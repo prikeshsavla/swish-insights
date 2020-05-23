@@ -8,6 +8,7 @@
     letter-spacing: 0.1rem;
     font-weight: 700;
   }
+
   .navbar-nav {
     .nav-item {
       .nav-link {
@@ -16,6 +17,17 @@
         font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 0.1rem;
+      }
+    }
+
+    .dropdown {
+      .dropdown-menu {
+        padding: 0;
+      }
+
+      .dropdown-item {
+        font-size: 14px;
+        padding: 5px 20px;
       }
     }
   }

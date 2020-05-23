@@ -13,6 +13,10 @@ class User < ApplicationRecord
     self.api_key = SecureRandom.uuid
   end
 
+  def display_name
+    (name.strip != "" ? name : email.split('@').first).truncate(13)
+  end
+
   def admin?
     self.email == 'prikesh@rirev.com'
   end

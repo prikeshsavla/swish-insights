@@ -95,7 +95,7 @@ var core = {
                         this.showHints();
                         if (!this.isValidUrl(this.url)) {
                             this.loadingResults = false;
-                            this.errorMessage = "Please enter a valid URL";
+                            this.errorMessage = "Please enter a valid URL (http://prikeshsavla.com)";
                             return false;
                         }
                         this.errorMessage = "";

@@ -2,13 +2,14 @@ class CallLightHouseApiJob < ApplicationJob
   queue_as :default
 
   def perform(query_url, user_id)
-
+    uri = URI.parse(query_url)
+    uri.scheme = 'http'
     categories = ["accessibility",
                   "best-practices",
                   "performance",
                   "pwa",
                   "seo"]
-    escaped_query_url = CGI.escape(query_url)
+    escaped_query_url = CGI.escape(uri.to_s)
 
     base_url = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?key=#{ENV['LIGHTHOUSE_API_KEY']}&url=#{escaped_query_url}"
     categories_param_string = categories.map { |category| "&category=#{category}" }.join
@@ -20,10 +21,10 @@ class CallLightHouseApiJob < ApplicationJob
     response = ::HTTParty.get(api_url)
 
     report = response.body
-    body = JSON.parse(response.body) # e.g {answer: 'because it was there'}
-
+    body = JSON.parse(response.body)
+    print(body)
     lighthouse = body["lighthouseResult"]
-
+    print(lighthouse)
     lighthouse_metrics = {
         "Performance": lighthouse["categories"]["performance"] ? lighthouse["categories"]["performance"]["score"] * 100 : null,
         "Accessibility": lighthouse["categories"]["accessibility"] ? lighthouse["categories"]["accessibility"]["score"] * 100 : null,
