@@ -63,7 +63,8 @@ module DisplayHelper
   end
 
   def leaderboard_rank_class(rank)
-    rank <= 3 ? 'table-warning' : (rank <= 10 ? 'table-success' : '')
+    # rank <= 3 ? 'table-success' : (rank <= 10 ? 'table-warning' : '')
+    
   end
 
 end

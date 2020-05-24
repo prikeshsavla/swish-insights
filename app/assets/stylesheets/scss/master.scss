@@ -1,16 +1,19 @@
 // Core variables and mixins
-@import 'variables.scss';
+@import 'scss/variables';
+@import 'bootswatch/variables';
 /* import the necessary Bootstrap files */
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
 
-@import 'components/mixins';
+@import 'scss/components/mixins';
 /* finally, import Bootstrap to set the changes! */
 @import 'bootstrap/scss/bootstrap';
 // Global CSS
-@import 'global.scss';
+@import 'scss/global';
 // Components
 
-@import "components/_init.scss";
+@import "scss/components/_init.scss";
 
-@import 'bootstrap-overrides.scss';
+@import 'scss/bootstrap-overrides';
+
+@import 'bootswatch/bootswatch';

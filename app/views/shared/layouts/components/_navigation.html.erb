@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-white navbar-custom ">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <img src="images/swish-inverse.png" alt="">
+      Swish
       <span class="sr-only">Swish</span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <% if current_user.present? %>
-              <a class="dropdown-item" href="#"><%= current_user.display_name %></a>
+              <span class="dropdown-item"><%= current_user.display_name %></span>
               <a class="dropdown-item" href="/users/edit">Edit Profile</a>
               <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
             <% else %>

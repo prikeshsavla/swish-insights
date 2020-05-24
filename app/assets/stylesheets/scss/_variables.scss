@@ -15,4 +15,8 @@ $gray-900: #212529 ;
 $black: #000 ;
 
 $primary: #ee0979;
-$secondary: #ff6a00;
+$secondary: rgb(255, 164, 0);
+
+$fail: rgb(255, 78, 66);
+$average: $secondary;
+$pass: rgb(12, 206, 107);
