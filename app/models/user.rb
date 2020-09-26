@@ -14,7 +14,7 @@ class User < ApplicationRecord
   end
 
   def display_name
-    (name.strip != "" ? name : email.split('@').first).truncate(13)
+    (name&.strip != "" ? name : email.split('@').first)&.truncate(13)
   end
 
   def admin?
