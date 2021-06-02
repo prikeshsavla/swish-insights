@@ -12,9 +12,9 @@
       <th>SEO</th>
       <th>Best-Practices</th>
       <th>First Contentful Paint</th>
-      <th>First CPU Idle</th>
+
       <th>First Meaningful Paint</th>
-      <th>Estimated Input Latency</th>
+
       <th>Time To Interactive</th>
       <th>Speed Index</th>
       <th>View Report</th>
@@ -33,15 +33,12 @@
         <td>  <%== metric_with_change(swish_report, :first_contentful_paint, swish_reports, index) %>
 
         </td>
-        <td>  <%== metric_with_change(swish_report, :first_cpu_idle, swish_reports, index, prefix: 's', inverse: true) %>
 
-        </td>
+
         <td>  <%== metric_with_change(swish_report, :first_meaningful_paint, swish_reports, index, prefix: 's', inverse: true) %>
 
         </td>
-        <td>  <%== metric_with_change(swish_report, :estimated_input_latency, swish_reports, index, prefix: 's', inverse: true) %>
 
-        </td>
         <td>  <%== metric_with_change(swish_report, :time_to_interactive, swish_reports, index, prefix: 's', inverse: true) %>
 
         </td>
@@ -66,9 +63,9 @@
         <th>SEO</th>
         <th>Best-Practices</th>
         <th>First Contentful Paint</th>
-        <th>First CPU Idle</th>
+
         <th>First Meaningful Paint</th>
-        <th>Estimated Input Latency</th>
+
         <th>Time To Interactive</th>
         <th>Speed Index</th>
       </tr>
